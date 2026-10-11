@@ -1,22 +1,24 @@
-# Gowthami's Birthday Surprise
+# Gween's Birthday Surprise
 
-A responsive birthday page for 12 October 2026. The standing garden portrait is the main hero image; the second garden pose and evening standing portrait sit beside it. The remaining six photographs are arranged in the memory gallery.
+Birthday website for Gowthami · 12 October 2026.
 
-## Upload the photo files
+## Add more photos to the gallery
 
-The updated page expects these files inside `birthday-gowthami/images/`:
+The gallery page automatically checks this folder for image files, so you can add more pictures without editing the page's HTML.
 
-- `gowthami-main.jpg`
-- `gowthami-standing-garden-pose.jpg`
-- `gowthami-standing-evening.jpg`
-- `gowthami-memory-01.jpg` through `gowthami-memory-06.jpg`
+1. Open the [images folder](https://github.com/shalem046-cyber/gween-s-birthdayy/tree/main/birthday-gowthami/images).
+2. Click **Add file → Upload files**.
+3. Upload extra `.jpg`, `.jpeg`, `.png`, or `.webp` pictures and commit to `main`.
+4. Open the [gallery page](https://shalem046-cyber.github.io/gween-s-birthdayy/gallery.html) after the Pages deployment finishes. The gallery automatically discovers supported image files in the folder.
 
-Download the photo package from the chat, extract it, then open this repository's `birthday-gowthami/images` folder on GitHub. Choose **Add file → Upload files**, select all nine JPEGs from the package's `images` folder, and commit to `main`. The folder placeholder is already committed.
+The three standing portraits are featured first, followed by the existing memory pictures and any extra photos. For nicer captions, use simple filenames such as `gween-extra-01.jpg` or `birthday-memory-10.jpg`.
 
-## GitHub Pages
+## Where the pages live
 
-If Pages is not enabled yet, open **Settings → Pages**. Under **Build and deployment**, choose **Deploy from a branch**, select `main` and `/ (root)`, then save. Let the deployment finish.
+- Main birthday surprise: `birthday-gowthami/index.html`
+- Dedicated gallery: `gallery.html`
+- Image assets: `birthday-gowthami/images/`
 
-Expected page URL: https://shalem046-cyber.github.io/college-hostel/birthday-gowthami/
+## Privacy
 
-**Privacy note:** this repository is public, so photos committed here can be viewed or downloaded by anyone with access to the public repository or website. Only upload pictures you are comfortable sharing that way.
+This repository is public. Any photos uploaded into this repository can be viewed or downloaded by others. Only upload images you're comfortable having accessible through a public link.
