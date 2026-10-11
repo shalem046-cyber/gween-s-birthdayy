@@ -185,6 +185,11 @@
 .music-open-youtube{display:inline-block;margin:0 13px 12px;color:var(--wine);font-size:.72rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .overlay:not(.open){pointer-events:none}
 
+
+.music-player-wrap audio{display:block;width:calc(100% - 24px);margin:0 12px 12px;min-height:40px}
+.music-help{font-size:.69rem;line-height:1.5;color:#8e777d;margin:0;padding:9px 13px 12px}
+.music-player-head small{color:#8e777d}
+
 </style>
 </head>
 <body class="locked">
@@ -255,18 +260,17 @@
 <div class="overlay" id="letterOverlay" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><article class="letter-paper"><div class="letter-top">A little birthday letter · 12 October 2026</div><div class="letter-seal" aria-hidden="true">✿</div><h2 id="letterTitle">Dear Gween,</h2><p class="letter-greeting">Happiest birthday to you, yarr! 🤍</p><p>I hope this day turns out to be a great one for you — full of lovely little moments, laughter, and reasons to smile. I really hope this small surprise made you smile too. I put it together with care, just to make your day feel a little more special.</p><div class="letter-divider" aria-hidden="true">✧ &nbsp; ✿ &nbsp; ✧</div><p class="letter-quote">Some people become a beautiful part of our memories without even knowing how special they are. You’ll always be one of them.</p><p class="letter-birthday-end">Happy Birthday, Gween! 🤍✨</p><p>May the year ahead bring you happiness, kind people, wonderful memories, and plenty of moments that make you proud to be yourself. Keep shining in your own way.</p><div class="signature">With warm wishes,<br><span>Always 🤍</span></div><button class="letter-close" id="closeLetter">Fold this letter gently ✿</button></article></div>
 <div class="overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo preview"><div class="lightbox-inner"><button class="lightbox-close" id="closeLightbox">Close ×</button><img id="lightboxImage" alt="Expanded memory"></div></div>
 
-<audio id="localBackgroundAudio" preload="auto" playsinline></audio>
+
 <div class="music-dock" id="musicDock">
  <button class="music-trigger" id="playSong" type="button" aria-expanded="false" aria-controls="musicPlayerWrap">
   <span class="music-note" aria-hidden="true">♫</span>
-  <span class="music-trigger-copy"><strong>Raanjhanaa</strong><small>Background music · starts at 0:00</small></span>
+  <span class="music-trigger-copy"><strong>Raanjhanaa</strong><small id="musicButtonStatus">Background music · starts at 3:00</small></span>
   <span class="music-arrow" aria-hidden="true">↗</span>
  </button>
  <div class="music-player-wrap" id="musicPlayerWrap" hidden>
-  <div class="music-player-head"><div><strong>Raanjhanaa · Title Track</strong><small>Starts from the beginning</small></div><button id="closeMusic" type="button" aria-label="Close music player">×</button></div>
-  <div class="music-video"><iframe id="musicFrame" title="Raanjhanaa official music video starting at three minutes" allow="autoplay; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-  <p class="music-help">The song starts when you tap “Open your surprise”. Phones may block sound until that tap; if needed, tap Play in the video. The official player may show ads.</p>
-  <a class="music-open-youtube" id="openMusicYoutube" href="https://www.youtube.com/watch?v=vgm1u2gPxzw" target="_blank" rel="noopener noreferrer">Open the official song ↗</a>
+  <div class="music-player-head"><div><strong>Raanjhanaa · from 3:00</strong><small>Local playback · no video or ads</small></div><button id="closeMusic" type="button" aria-label="Close music player">×</button></div>
+  <audio id="localBackgroundAudio" preload="metadata" playsinline controls></audio>
+  <p class="music-help" id="musicStatus" role="status" aria-live="polite">The song will start around 3:00. Phones may require one tap to allow sound.</p>
  </div>
  <button class="voice-trigger" id="voiceToggle" type="button" aria-expanded="false" aria-controls="voiceRecorder">🎙 Record my singing</button>
  <div class="voice-recorder" id="voiceRecorder" hidden>
@@ -282,45 +286,66 @@
 <script id="gween-media-controls">
 (function(){
  const byId=function(id){return document.getElementById(id)};
- const musicFrame=byId('musicFrame'),musicWrap=byId('musicPlayerWrap'),playSong=byId('playSong'),closeMusic=byId('closeMusic');
- const backgroundAudio=byId('localBackgroundAudio');
+ const musicWrap=byId('musicPlayerWrap'),playSong=byId('playSong'),closeMusic=byId('closeMusic');
+ const backgroundAudio=byId('localBackgroundAudio'),musicStatus=byId('musicStatus'),musicButtonStatus=byId('musicButtonStatus');
  const voiceToggle=byId('voiceToggle'),voiceRecorder=byId('voiceRecorder'),startVoice=byId('startVoice'),stopVoice=byId('stopVoice'),voiceStatus=byId('voiceStatus'),voicePreview=byId('voicePreview'),downloadVoice=byId('downloadVoice');
- // Set this to a licensed audio file you have permission to publish, for example "audio/background-music.mp3".
- // It is intentionally blank until such a file is supplied; otherwise the official YouTube player is used.
- const LOCAL_TRACK_URL='';
- let localStarted=false,recorder=null,stream=null,chunks=[],recordedUrl=null;
- function startOfficialSong(){
-  if(!musicFrame||!musicWrap||!playSong)return;
-  musicWrap.hidden=false;
-  playSong.setAttribute('aria-expanded','true');
-  if(!musicFrame.getAttribute('src')){
-   // No start offset: play from 0:00. This is called on the same tap as "Open your surprise".
-   musicFrame.src='https://www.youtube-nocookie.com/embed/vgm1u2gPxzw?autoplay=1&controls=1&rel=0&playsinline=1';
+ const LOCAL_TRACK_URL='audio/background-music.mp3';
+ let trackConfigured=false,recorder=null,stream=null,chunks=[],recordedUrl=null;
+ function setMusicStatus(message){if(musicStatus)musicStatus.textContent=message;}
+ function prepareTrack(){
+  if(!backgroundAudio)return false;
+  if(!trackConfigured){
+   trackConfigured=true;
+   backgroundAudio.src=LOCAL_TRACK_URL;
+   backgroundAudio.load();
   }
+  return true;
  }
- function startBackgroundMusic(){
-  if(LOCAL_TRACK_URL&&backgroundAudio){
-   if(!localStarted){
-    localStarted=true;
-    backgroundAudio.src=LOCAL_TRACK_URL;
-    const attempt=backgroundAudio.play();
-    if(attempt&&typeof attempt.catch==='function')attempt.catch(function(){localStarted=false;startOfficialSong()});
-   }
-  }else startOfficialSong();
- }
- // The Open Surprise click counts as the user's tap on mobile and starts background music from the beginning.
- const surpriseButton=byId('openSurprise');
- if(surpriseButton)surpriseButton.addEventListener('click',startBackgroundMusic);
- if(playSong&&musicWrap&&musicFrame){
-  playSong.addEventListener('click',function(){
-   startBackgroundMusic();
-   if(!musicFrame.getAttribute('src')&&(!LOCAL_TRACK_URL||!localStarted))startOfficialSong();
-   if(LOCAL_TRACK_URL&&localStarted)musicWrap.hidden=true;
+ if(backgroundAudio){
+  backgroundAudio.addEventListener('loadedmetadata',function(){
+   try{backgroundAudio.currentTime=backgroundAudio.duration>180?180:0;}catch(error){}
+  });
+  backgroundAudio.addEventListener('play',function(){
+   if(musicButtonStatus)musicButtonStatus.textContent='Now playing · from 3:00';
+   if(playSong)playSong.setAttribute('aria-label','Pause Raanjhanaa background music');
+   setMusicStatus('Playing from around 3:00. Use the controls to pause or adjust volume.');
+  });
+  backgroundAudio.addEventListener('pause',function(){
+   if(musicButtonStatus)musicButtonStatus.textContent='Background music · starts at 3:00';
+   if(playSong)playSong.setAttribute('aria-label','Play Raanjhanaa background music');
+  });
+  backgroundAudio.addEventListener('ended',function(){
+   try{backgroundAudio.currentTime=backgroundAudio.duration>180?180:0;}catch(error){}
+   backgroundAudio.play().catch(function(){setMusicStatus('Tap Play to continue listening.');});
+  });
+  backgroundAudio.addEventListener('error',function(){
+   setMusicStatus('Song file not added yet. Add a licensed MP3 at birthday-gowthami/audio/background-music.mp3.');
   });
  }
- if(closeMusic&&musicFrame&&musicWrap&&playSong){
+ function startBackgroundMusic(){
+  if(!backgroundAudio||!musicWrap||!playSong)return;
+  musicWrap.hidden=false;
+  playSong.setAttribute('aria-expanded','true');
+  if(!prepareTrack())return;
+  if(backgroundAudio.readyState>=1){
+   try{backgroundAudio.currentTime=backgroundAudio.duration>180?180:0;}catch(error){}
+  }
+  backgroundAudio.play().catch(function(){
+   setMusicStatus('Tap Play in the audio controls. On phones, sound can require a direct tap.');
+  });
+ }
+ const surpriseButton=byId('openSurprise');
+ if(surpriseButton)surpriseButton.addEventListener('click',startBackgroundMusic);
+ if(playSong&&musicWrap){
+  playSong.addEventListener('click',function(){
+   if(backgroundAudio&&!backgroundAudio.paused){backgroundAudio.pause();return;}
+   startBackgroundMusic();
+  });
+ }
+ if(closeMusic&&musicWrap&&playSong){
   closeMusic.addEventListener('click',function(){
-   musicWrap.hidden=true;playSong.setAttribute('aria-expanded','false');musicFrame.removeAttribute('src');
+   if(backgroundAudio)backgroundAudio.pause();
+   musicWrap.hidden=true;playSong.setAttribute('aria-expanded','false');
   });
  }
  if(voiceToggle&&voiceRecorder){
