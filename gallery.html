@@ -53,6 +53,12 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
 /* All gallery images are direct public URLs and always visible */
 .card img{display:block!important;opacity:1!important;visibility:visible!important;min-height:240px}
 @media(max-width:520px){.card img{min-height:0}}
+
+.gallery-status{text-align:center;color:#a95769;letter-spacing:.06em;font-size:.78rem;margin:-15px 0 24px}
+.image-fallback{min-height:240px;display:grid;place-items:center;background:#f2dfd9;color:#a95769;font:italic 1rem "Playfair Display",Georgia,serif}
+#photoGrid .card img{display:block!important;opacity:1!important;visibility:visible!important}
+#photoGrid .card img[style*="display: none"]{display:none!important}
+
 </style>
 </head>
 <body>
@@ -65,20 +71,84 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
 </section>
 <main class="gallery">
  <div class="gallery-head"><h2>Little moments, lovely memories</h2><p>Every picture has its own little story. Tap any photo to see it in full size.</p></div>
- <div class="grid">
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-main.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-main.jpg" alt="Gowthami's main standing garden portrait"></a><figcaption><span class="num">Portrait no. 01</span><p class="title">Your kind of magic</p><p class="desc">The portrait that leads this little birthday story.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-standing-garden-pose.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-standing-garden-pose.jpg" alt="Gowthami's second standing garden portrait"></a><figcaption><span class="num">Portrait no. 02</span><p class="title">A garden memory</p><p class="desc">A lovely moment saved just for this page.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-standing-evening.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-standing-evening.jpg" alt="Gowthami standing beside evening lights"></a><figcaption><span class="num">Portrait no. 03</span><p class="title">An evening to remember</p><p class="desc">A little glow for a special day.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-01.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-01.jpg" alt="Gowthami memory photo 1" loading="lazy"></a><figcaption><span class="num">Memory no. 01</span><p class="title">A little extra sparkle</p><p class="desc">Some moments make a page feel personal.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-02.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-02.jpg" alt="Gowthami memory photo 2" loading="lazy"></a><figcaption><span class="num">Memory no. 02</span><p class="title">One lovely moment</p><p class="desc">A small detail worth remembering.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-03.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-03.jpg" alt="Gowthami memory photo 3" loading="lazy"></a><figcaption><span class="num">Memory no. 03</span><p class="title">A quiet little moment</p><p class="desc">A frame from the album of memories.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-04.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-04.jpg" alt="Gowthami memory photo 4" loading="lazy"></a><figcaption><span class="num">Memory no. 04</span><p class="title">A moment to keep</p><p class="desc">Another piece of this birthday gallery.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-05.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-05.jpg" alt="Gowthami memory photo 5" loading="lazy"></a><figcaption><span class="num">Memory no. 05</span><p class="title">That familiar smile</p><p class="desc">A little warmth in a single picture.</p></figcaption></figure>
-  <figure class="card"><a href="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-06.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-memory-06.jpg" alt="Gowthami memory photo 6" loading="lazy"></a><figcaption><span class="num">Memory no. 06</span><p class="title">A memory from the album</p><p class="desc">For the moments still waiting to happen.</p></figcaption></figure>
- </div>
+ <p class="gallery-status" id="galleryStatus" role="status" aria-live="polite">Opening Gween’s photo album…</p>
+ <div class="grid" id="photoGrid"></div>
 </main>
 <section class="quote"><span class="star">✧</span><blockquote>“Some people make ordinary days feel a little brighter just by being themselves. I hope this new year brings you the same warmth and happiness you bring to others.”</blockquote><p>A little birthday thought, just for you · Gween</p></section>
 <section class="end"><div class="kicker" style="color:#e9bdb4">12 · 10 · 2026</div><h2>Keep being beautifully you.</h2><p>Happy Birthday, Gween. May your year be kind, bright, and full of lovely memories.</p><a class="btn" href="https://shalem046-cyber.github.io/gween-s-birthdayy/birthday-gowthami/">Back to your surprise ✿</a></section>
 <footer>Made with ♥ for Gowthami · Gween · 12 October 2026</footer>
+
+<script>
+(function(){
+ const repoOwner='shalem046-cyber';
+ const repoName='gween-s-birthdayy';
+ const folder='birthday-gowthami/images';
+ const rawBase='https://raw.githubusercontent.com/'+repoOwner+'/'+repoName+'/main/'+folder+'/';
+ const status=document.getElementById('galleryStatus');
+ const grid=document.getElementById('photoGrid');
+ const featured=['gowthami-main.jpg','gowthami-standing-garden-pose.jpg','gowthami-standing-evening.jpg'];
+ const known=[
+  'gowthami-main.jpg','gowthami-standing-garden-pose.jpg','gowthami-standing-evening.jpg',
+  'gowthami-memory-01.jpg','gowthami-memory-02.jpg','gowthami-memory-03.jpg',
+  'gowthami-memory-04.jpg','gowthami-memory-05.jpg','gowthami-memory-06.jpg'
+ ];
+ const descriptions={
+  'gowthami-main.jpg':['Portrait no. 01','Your kind of magic','The portrait that leads this little birthday story.'],
+  'gowthami-standing-garden-pose.jpg':['Portrait no. 02','A garden memory','A lovely moment saved just for this page.'],
+  'gowthami-standing-evening.jpg':['Portrait no. 03','An evening to remember','A little glow for a special day.'],
+  'gowthami-memory-01.jpg':['Memory no. 01','A little extra sparkle','Some moments make a page feel personal.'],
+  'gowthami-memory-02.jpg':['Memory no. 02','One lovely moment','A small detail worth remembering.'],
+  'gowthami-memory-03.jpg':['Memory no. 03','A quiet little moment','A frame from the album of memories.'],
+  'gowthami-memory-04.jpg':['Memory no. 04','A moment to keep','Another piece of this birthday gallery.'],
+  'gowthami-memory-05.jpg':['Memory no. 05','That familiar smile','A little warmth in a single picture.'],
+  'gowthami-memory-06.jpg':['Memory no. 06','A memory from the album','For the moments still waiting to happen.']
+ };
+ function titleFromFile(name){
+  return name.replace(/\.[^.]+$/,'').replace(/^gowthami[-_]?/i,'').replace(/[-_]+/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase()})||'A lovely memory';
+ }
+ function descriptionFor(name,index){
+  if(descriptions[name])return descriptions[name];
+  const title=titleFromFile(name);
+  return ['Extra memory '+String(index+1).padStart(2,'0'),title,'Another lovely moment added to Gween’s album.'];
+ }
+ function addCard(file,index){
+  const name=file.name;
+  const src=file.download_url||rawBase+encodeURIComponent(name);
+  const details=descriptionFor(name,index);
+  const figure=document.createElement('figure');figure.className='card';
+  const link=document.createElement('a');link.href=src;link.target='_blank';link.rel='noopener';link.setAttribute('aria-label','Open '+details[1]+' full size');
+  const img=document.createElement('img');img.src=src;img.alt='Gowthami — '+details[1];img.loading=index<3?'eager':'lazy';img.decoding='async';
+  img.addEventListener('error',function(){img.style.display='none';const fallback=document.createElement('div');fallback.className='image-fallback';fallback.textContent='Photo unavailable';link.appendChild(fallback);});
+  link.appendChild(img);figure.appendChild(link);
+  const caption=document.createElement('figcaption');
+  const num=document.createElement('span');num.className='num';num.textContent=details[0];
+  const title=document.createElement('p');title.className='title';title.textContent=details[1];
+  const desc=document.createElement('p');desc.className='desc';desc.textContent=details[2];
+  caption.append(num,title,desc);figure.appendChild(caption);grid.appendChild(figure);
+ }
+ function paint(files){
+  const images=files.filter(function(file){return /\.(jpe?g|png|webp|gif)$/i.test(file.name);});
+  images.sort(function(a,b){
+   const ai=featured.indexOf(a.name),bi=featured.indexOf(b.name);
+   if(ai!==-1||bi!==-1){if(ai===-1)return 1;if(bi===-1)return -1;return ai-bi;}
+   const aN=(a.name.match(/memory[-_ ]?(\d+)/i)||[])[1];
+   const bN=(b.name.match(/memory[-_ ]?(\d+)/i)||[])[1];
+   if(aN&&bN)return Number(aN)-Number(bN);
+   if(aN)return -1;if(bN)return 1;
+   return a.name.localeCompare(b.name);
+  });
+  grid.textContent='';
+  images.forEach(addCard);
+  if(status)status.textContent=images.length+' photos in Gween’s album ✿';
+ }
+ const fallback=known.map(function(name){return {name:name,download_url:rawBase+name};});
+ paint(fallback);
+ fetch('https://api.github.com/repos/'+repoOwner+'/'+repoName+'/contents/'+folder+'?ref=main',{headers:{'Accept':'application/vnd.github+json'}})
+  .then(function(response){if(!response.ok)throw new Error('GitHub image list unavailable');return response.json()})
+  .then(function(files){if(Array.isArray(files))paint(files)})
+  .catch(function(){if(status)status.textContent='Gween’s album · '+grid.children.length+' photos. More pictures can be added to the GitHub images folder.';});
+})();
+</script>
+
 </body>
 </html>
