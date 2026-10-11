@@ -1,0 +1,46 @@
+name: Publish birthday photo assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'birthday-gowthami/images/gowthami-birthday-photos.zip'
+      - '.github/workflows/extract-gowthami-photos.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract-photos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the birthday site
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Extract the uploaded photo archive
+        run: |
+          set -euo pipefail
+          unzip -o birthday-gowthami/images/gowthami-birthday-photos.zip -d birthday-gowthami
+          test -f birthday-gowthami/images/gowthami-main.jpg
+          test -f birthday-gowthami/images/gowthami-standing-garden-pose.jpg
+          test -f birthday-gowthami/images/gowthami-standing-evening.jpg
+          for i in 01 02 03 04 05 06; do
+            test -f "birthday-gowthami/images/gowthami-memory-${i}.jpg"
+          done
+
+      - name: Commit the real image files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add birthday-gowthami/images/*.jpg
+          if git diff --cached --quiet; then
+            echo "Birthday image files are already published."
+            exit 0
+          fi
+          git commit -m "Publish Gowthami birthday photos"
+          git push origin HEAD:main
