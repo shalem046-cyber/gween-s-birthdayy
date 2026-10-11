@@ -85,6 +85,23 @@
 @keyframes quoteFloat{50%{transform:translateY(-5px) rotate(7deg)}}@keyframes quoteOpen{from{opacity:0;transform:translateY(-8px) scale(.99)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.memory-card,.quote-flower{animation:none!important}.quote-content{animation:none}}
 
+
+/* Gallery visibility fix: render the full gallery even when observers/scripts fail */
+.nav-gallery{font-size:.78rem;text-decoration:none;color:#a95769;border-bottom:1px solid #d7b2aa;padding:7px 0;white-space:nowrap}
+.nav-gallery:hover{color:var(--wine);border-color:var(--wine)}
+#memories.memories{display:block!important;position:relative!important;visibility:visible!important;opacity:1!important;min-height:60vh;overflow:visible}
+#memories .section-head,#memories .memory-grid,#memories .memory-card{display:block;visibility:visible!important;opacity:1!important;transform:none!important;translate:none!important}
+#memories .section-head{margin:0 auto 42px}
+#memories .memory-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:22px;max-width:1080px;margin:0 auto}
+#memories .memory-card{width:auto;min-width:0;animation:none!important;margin:0}
+#memories .photo-frame{display:grid;min-height:260px}
+#memories .photo-frame img{display:block;position:absolute;inset:0;opacity:0;width:100%;height:100%;object-fit:cover}
+#memories .photo-frame.has-photo img{opacity:1}
+#memories .photo-frame.has-photo .photo-placeholder{display:none}
+#memories .photo-placeholder{position:relative;z-index:2}
+@media(max-width:800px){#memories .memory-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}#memories .memory-card:nth-child(3){grid-column:auto;max-width:none;width:auto}}
+@media(max-width:520px){.nav{flex-wrap:wrap;gap:8px}.nav-gallery{order:3;width:100%;text-align:center}#memories .memory-grid{grid-template-columns:1fr;max-width:360px;gap:20px}#memories .photo-frame{min-height:300px}}
+
 </style>
 </head>
 <body class="locked">
@@ -97,7 +114,7 @@
  <div class="intro-kicker">A little something, just for Gween</div><h1>For Gween</h1><p>A little birthday garden for Gowthami — with love for the nickname that makes this surprise yours.</p><div class="birthday-date intro-date"><span class="date-label">YOUR SPECIAL DAY</span><strong>12 OCTOBER 2026</strong><span class="date-extra">MONDAY · MADE JUST FOR YOU</span></div><button class="btn" id="openSurprise">Open your surprise <span class="arrow">↗</span></button>
 </div></section>
 <div class="site" id="site">
- <nav class="nav"><div class="brand">a little <span>✿</span> surprise</div><div class="nav-note">MONDAY · 12 OCTOBER 2026</div></nav>
+ <nav class="nav"><div class="brand">a little <span>✿</span> surprise</div><a class="nav-gallery" href="#memories">Photos &amp; memories ↓</a><div class="nav-note">MONDAY · 12 OCTOBER 2026</div></nav>
  <main>
  <section class="hero" id="top">
   <div class="hero-inner hero-layout">
@@ -120,7 +137,7 @@
    </div>
   </div>
  </section>
- <section class="section memories" id="memories"><div class="section-head reveal"><span class="eyebrow">Little moments, lovely memories</span><h2>A gallery of <em>you</em></h2><p>Some people make the world feel warmer just by being in it. This little space is reserved for your favourite smiles.</p></div>
+ <section class="section memories" id="memories" aria-label="Gween photo gallery"><div class="section-head"><span class="eyebrow">Little moments, lovely memories</span><h2>A gallery of <em>you</em></h2><p>Some people make the world feel warmer just by being in it. This little space is reserved for your favourite smiles.</p></div>
  <div class="memory-grid">
 <article class="memory-card" style="--tilt:-0.7deg"><div class="photo-frame" data-photo="images/gowthami-memory-01.jpg"><img src="images/gowthami-memory-01.jpg" alt="A little extra sparkle — Gowthami" loading="lazy"><div class="photo-placeholder"><span class="glyph">❀</span><strong>A little extra sparkle</strong><small>Your photo will bloom here</small></div></div><div class="photo-caption"><span class="number">Memory no. 01</span><h3>A little extra sparkle</h3><p>A smile with its own kind of magic.</p></div></article>
 <article class="memory-card" style="--tilt:0.7deg"><div class="photo-frame" data-photo="images/gowthami-memory-02.jpg"><img src="images/gowthami-memory-02.jpg" alt="One lovely moment — Gowthami" loading="lazy"><div class="photo-placeholder"><span class="glyph">✿</span><strong>One lovely moment</strong><small>Your photo will bloom here</small></div></div><div class="photo-caption"><span class="number">Memory no. 02</span><h3>One lovely moment</h3><p>A frame worth keeping close.</p></div></article>
