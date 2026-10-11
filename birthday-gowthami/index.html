@@ -289,7 +289,7 @@
  const musicWrap=byId('musicPlayerWrap'),playSong=byId('playSong'),closeMusic=byId('closeMusic');
  const backgroundAudio=byId('localBackgroundAudio'),musicStatus=byId('musicStatus'),musicButtonStatus=byId('musicButtonStatus');
  const voiceToggle=byId('voiceToggle'),voiceRecorder=byId('voiceRecorder'),startVoice=byId('startVoice'),stopVoice=byId('stopVoice'),voiceStatus=byId('voiceStatus'),voicePreview=byId('voicePreview'),downloadVoice=byId('downloadVoice');
- const LOCAL_TRACK_URL='audio/background-music.mp3';
+ const LOCAL_TRACK_URL='audio/WhatsApp%20Audio%202026-10-11%20at%2011.39.54%20AM.mpeg';
  let trackConfigured=false,recorder=null,stream=null,chunks=[],recordedUrl=null;
  function setMusicStatus(message){if(musicStatus)musicStatus.textContent=message;}
  function prepareTrack(){
@@ -319,7 +319,7 @@
    backgroundAudio.play().catch(function(){setMusicStatus('Tap Play to continue listening.');});
   });
   backgroundAudio.addEventListener('error',function(){
-   setMusicStatus('Song file not added yet. Add a licensed MP3 at birthday-gowthami/audio/background-music.mp3.');
+   setMusicStatus('The uploaded audio could not be loaded. Check your connection and try the music button again.');
   });
  }
  function startBackgroundMusic(){
