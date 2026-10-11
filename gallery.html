@@ -141,7 +141,7 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
 <div class="gallery-music-dock">
  <button id="galleryMusicToggle" type="button" aria-label="Play birthday background music">
   <span class="gallery-music-icon" aria-hidden="true">♫</span>
-  <span class="gallery-music-copy"><strong>Music for this moment</strong><small id="galleryMusicLabel">Background song · starts at 3:00</small></span>
+  <span class="gallery-music-copy"><strong>Music for this moment</strong><small id="galleryMusicLabel">Background song · starts at 0:00</small></span>
  </button>
  <p id="galleryMusicStatus" role="status" aria-live="polite">Trying to start the background song…</p>
  <audio id="galleryAudio" preload="metadata" playsinline></audio>
@@ -264,19 +264,19 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
  }
  if(galleryAudio){
   galleryAudio.addEventListener('loadedmetadata',function(){
-   try{galleryAudio.currentTime=galleryAudio.duration>180?180:0;}catch(error){}
+   try{galleryAudio.currentTime=0;}catch(error){}
   });
   galleryAudio.addEventListener('play',function(){
-   if(musicLabel)musicLabel.textContent='Now playing · starting at 3:00';
+   if(musicLabel)musicLabel.textContent='Now playing · from the beginning';
    if(musicToggle)musicToggle.setAttribute('aria-label','Pause birthday background music');
-   musicMessage('The background song is playing. Tap the button to pause.');
+   musicMessage('The background song is playing from the beginning. Tap the button to pause.');
   });
   galleryAudio.addEventListener('pause',function(){
-   if(musicLabel)musicLabel.textContent='Background song · starts at 3:00';
+   if(musicLabel)musicLabel.textContent='Background song · starts at 0:00';
    if(musicToggle)musicToggle.setAttribute('aria-label','Play birthday background music');
   });
   galleryAudio.addEventListener('ended',function(){
-   try{galleryAudio.currentTime=galleryAudio.duration>180?180:0;}catch(error){}
+   try{galleryAudio.currentTime=0;}catch(error){}
    galleryAudio.play().catch(function(){musicMessage('Tap the music button to continue listening.');});
   });
   galleryAudio.addEventListener('error',function(){
@@ -288,7 +288,7 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
   if(!galleryAudio.paused){galleryAudio.pause();return;}
   loadLocalTrack();
   try{
-   if(galleryAudio.readyState>=1)galleryAudio.currentTime=galleryAudio.duration>180?180:0;
+   if(galleryAudio.readyState>=1)galleryAudio.currentTime=0;
    await galleryAudio.play();
   }catch(error){
    musicMessage('Your phone may block autoplay. Tap again after the song file is added.');
