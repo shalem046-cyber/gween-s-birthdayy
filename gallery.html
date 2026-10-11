@@ -253,7 +253,7 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
  const musicToggle=document.getElementById('galleryMusicToggle');
  const musicLabel=document.getElementById('galleryMusicLabel');
  const musicStatus=document.getElementById('galleryMusicStatus');
- const LOCAL_TRACK_URL='birthday-gowthami/audio/background-music.mp3';
+ const LOCAL_TRACK_URL='birthday-gowthami/audio/WhatsApp%20Audio%202026-10-11%20at%2011.39.54%20AM.mpeg';
  function musicMessage(message){if(musicStatus)musicStatus.textContent=message;}
  function loadLocalTrack(){
   if(!galleryAudio)return;
@@ -280,7 +280,7 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
    galleryAudio.play().catch(function(){musicMessage('Tap the music button to continue listening.');});
   });
   galleryAudio.addEventListener('error',function(){
-   musicMessage('Song file not added yet. Add a licensed MP3 at birthday-gowthami/audio/background-music.mp3.');
+   musicMessage('The uploaded audio could not be loaded. Check your connection and try the music button again.');
   });
  }
  async function toggleGalleryMusic(){
