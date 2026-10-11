@@ -145,7 +145,7 @@
 .intro .flower.f3{animation-delay:.48s,1.88s}
 @keyframes flowerSway{0%,100%{transform:translateX(-50%) scale(1) rotate(-3deg)}50%{transform:translateX(-50%) scale(1) rotate(4deg)}}
 /* Floating song player; user click starts official video at 3:00 */
-.music-dock{position:fixed;right:16px;bottom:16px;z-index:160;width:min(360px,calc(100vw - 24px));font-family:"DM Sans",sans-serif;opacity:0;pointer-events:none;visibility:hidden;transform:translateY(10px);transition:opacity .35s,transform .35s,visibility .35s}body.revealed .music-dock{opacity:1;pointer-events:auto;visibility:visible;transform:none}
+.music-dock{position:fixed;right:16px;bottom:16px;z-index:160;width:min(360px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;font-family:"DM Sans",sans-serif;opacity:0;pointer-events:none;visibility:hidden;transform:translateY(10px);transition:opacity .35s,transform .35s,visibility .35s}body.revealed .music-dock{opacity:1;pointer-events:auto;visibility:visible;transform:none}
 .music-trigger{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #ffffff5c;border-radius:999px;background:#642e43;color:#fff8f1;padding:11px 16px;box-shadow:0 12px 36px #31131f30;cursor:pointer;transition:transform .2s,background .2s}
 .music-trigger:hover{transform:translateY(-2px);background:#7b3c56}
 .music-note{display:grid;place-items:center;width:38px;height:38px;flex:none;background:#ffffff1c;border-radius:50%;font-size:1.5rem}
@@ -270,7 +270,7 @@
  <button class="voice-trigger" id="voiceToggle" type="button" aria-expanded="false" aria-controls="voiceRecorder">🎙 Record my singing</button>
  <div class="voice-recorder" id="voiceRecorder" hidden>
   <div class="voice-title">A little voice note</div>
-  <p>Record a singing clip with your microphone. It stays in this browser until you choose to download it—nothing uploads automatically.</p>
+  <p>Play the song through headphones, then record your singing here for a cleaner take. This records your microphone only—not the YouTube track. The file stays in this browser until you download it.</p>
   <div class="voice-actions"><button id="startVoice" type="button">● Start recording</button><button id="stopVoice" class="secondary" type="button" disabled>Stop</button></div>
   <p class="voice-status" id="voiceStatus" role="status" aria-live="polite">Tap Start and allow microphone access when asked.</p>
   <audio id="voicePreview" controls hidden></audio>
@@ -286,8 +286,6 @@
  let recorder=null,stream=null,chunks=[],recordedUrl=null;
  if(playSong&&musicWrap&&musicFrame){
   playSong.addEventListener('click',function(){
-   if(voiceRecorder)voiceRecorder.hidden=true;
-   if(voiceToggle)voiceToggle.setAttribute('aria-expanded','false');
    musicWrap.hidden=false;
    playSong.setAttribute('aria-expanded','true');
    if(!musicFrame.getAttribute('src')){
@@ -305,7 +303,6 @@
    const opening=voiceRecorder.hidden;
    voiceRecorder.hidden=!opening;
    voiceToggle.setAttribute('aria-expanded',String(opening));
-   if(opening&&musicWrap){musicWrap.hidden=true;if(playSong)playSong.setAttribute('aria-expanded','false');if(musicFrame)musicFrame.removeAttribute('src')}
   });
  }
  function setStatus(message){if(voiceStatus)voiceStatus.textContent=message}
