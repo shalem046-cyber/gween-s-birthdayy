@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#fbf4ee"><meta name="description" content="A little garden of birthday wishes, made for Gowthami — October 12, 2026.">
-<title>For Gowthami ✿ A Birthday Surprise</title>
+<title>For Gowthami · Gween ✿ A Birthday Surprise</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <style>
@@ -40,7 +40,22 @@
 @media(max-width:800px){.hero .hero-inner.hero-layout{grid-template-columns:1fr;gap:34px;max-width:580px}.hero-portrait-wrap{width:min(73vw,335px)}.hero .hero-message h1{font-size:clamp(3.2rem,12vw,5.8rem)}.hero .hero-message .scroll-cue{margin-top:28px}}
 @media(max-width:440px){.hero-portrait-wrap{width:min(70vw,300px)}.hero .hero-message h1{font-size:clamp(2.8rem,13vw,4.2rem)}.hero .hero-message .hero-sub{font-size:1.28rem}.hero .hero-message .hero-copy{font-size:.92rem}}
 
-</style><script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+/* Highlight her nickname and birthday date */
+.birthday-date{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding:13px 21px 12px;margin:0 auto 24px;border:1px solid #b58b5480;border-radius:17px;background:linear-gradient(145deg,#fffaf3,#f7e9df);box-shadow:0 10px 30px #642e4312;color:var(--wine);min-width:220px;position:relative}
+.birthday-date:before,.birthday-date:after{content:"✧";position:absolute;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--gold)}
+.birthday-date:before{left:9px}.birthday-date:after{right:9px}
+.birthday-date .date-label{font:700 .59rem "DM Sans",sans-serif;letter-spacing:.19em;color:#9b7780}
+.birthday-date strong{font:600 .98rem "DM Sans",sans-serif;letter-spacing:.105em;color:var(--wine)}
+.birthday-date .date-extra{font:500 .58rem "DM Sans",sans-serif;letter-spacing:.1em;color:#a17b70}
+.intro-date{margin:0 auto 24px}
+.nickname-tag{display:flex;align-items:center;justify-content:center;gap:9px;color:#9a6e79;font-size:.76rem;letter-spacing:.08em;margin:-4px auto 20px}
+.nickname-tag strong{font:italic 600 1.18rem "Playfair Display",Georgia,serif;color:var(--wine);letter-spacing:.01em}
+.nickname-tag span{color:var(--gold)}
+.hero-date{margin-bottom:23px}
+@media(max-width:440px){.birthday-date{min-width:205px;padding:11px 18px 10px}.birthday-date strong{font-size:.86rem}.birthday-date .date-extra{font-size:.52rem}}
+
+</style>
 </head>
 <body class="locked">
 <div id="petals" aria-hidden="true"></div><div id="photoLoadStatus" role="status" aria-live="polite" style="position:fixed;left:10px;bottom:10px;z-index:90;padding:6px 10px;border-radius:20px;background:#fffaf0cc;color:#89767b;font:11px sans-serif;pointer-events:none">Preparing birthday photos…</div>
@@ -49,10 +64,10 @@
  <div class="flower f1"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div>
  <div class="flower f2"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div>
  <div class="flower f3"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div></div>
- <div class="intro-kicker">A little something, just for you</div><h1>For Gowthami</h1><p>A small garden of birthday wishes, a few lovely memories, and a letter waiting just for you.</p><button class="btn" id="openSurprise">Open your surprise <span class="arrow">↗</span></button>
+ <div class="intro-kicker">A little something, just for Gween</div><h1>For Gween</h1><p>A little birthday garden for Gowthami — with love for the nickname that makes this surprise yours.</p><div class="birthday-date intro-date"><span class="date-label">YOUR SPECIAL DAY</span><strong>12 OCTOBER 2026</strong><span class="date-extra">MONDAY · MADE JUST FOR YOU</span></div><button class="btn" id="openSurprise">Open your surprise <span class="arrow">↗</span></button>
 </div></section>
 <div class="site" id="site">
- <nav class="nav"><div class="brand">a little <span>✿</span> surprise</div><div class="nav-note">12 October · A day for you</div></nav>
+ <nav class="nav"><div class="brand">a little <span>✿</span> surprise</div><div class="nav-note">MONDAY · 12 OCTOBER 2026</div></nav>
  <main>
  <section class="hero" id="top">
   <div class="hero-inner hero-layout">
@@ -66,6 +81,8 @@
     <div class="hero-ornament" aria-hidden="true">✧</div>
     <span class="eyebrow">A birthday wish, made with care</span>
     <h1 id="nameTitle" aria-label="Gowthami"></h1>
+    <div class="nickname-tag"><span>✿</span> her nickname <strong>Gween</strong> <span>♡</span></div>
+    <div class="birthday-date hero-date"><span class="date-label">THE DAY TO CELEBRATE</span><strong>12 OCTOBER 2026</strong><span class="date-extra">MONDAY · A LITTLE MAGIC, JUST FOR YOU</span></div>
     <p class="hero-sub">your day. your little universe.</p>
     <p class="hero-copy">Today deserves a little extra magic. So here's a tiny corner of the world, made to celebrate you.</p>
     <a class="btn" href="#memories">There's more inside <span class="arrow">↓</span></a>
@@ -85,8 +102,8 @@
  <section class="section note" id="letter"><div class="note-inner"><div class="note-art reveal" aria-hidden="true"><span class="big-flower">🌷</span><span class="tiny-line">With warm wishes · always</span></div><div class="note-copy reveal"><span class="eyebrow">A little note from the heart</span><h2>Words, just for <em>you.</em></h2><p>Not every gift needs a ribbon. Some are simply a few honest words, put together with care, for someone who deserves a lovely day.</p><p>I saved a letter for you. No hurry—open it when you're ready.</p><button class="btn" id="openLetter">Read your letter <span class="arrow">↗</span></button></div></div></section>
  <section class="section wishes"><div class="section-head reveal"><span class="eyebrow">For the year ahead</span><h2>May life bring you…</h2><p>Not just a wonderful birthday, but plenty of reasons to feel happy long after today is over.</p></div><div class="wish-row"><article class="wish reveal"><span class="wish-icon">✧</span><h3>More reasons to smile</h3><p>The easy kind of happiness that finds you in ordinary moments.</p></article><article class="wish reveal"><span class="wish-icon">❋</span><h3>Dreams that come closer</h3><p>New doors, brave beginnings, and people who cheer you on.</p></article><article class="wish reveal"><span class="wish-icon">♡</span><h3>The gentlest kind of love</h3><p>Kindness, peace, and people who make you feel appreciated.</p></article></div></section>
  <section class="end-note"><span class="eyebrow">And one last thing…</span><h2>Keep being<br><em>beautifully you.</em></h2><p>I hope this little surprise gives you one more reason to smile today. You deserve a birthday full of warmth, laughter, and memories worth keeping.</p><button class="btn" id="celebrate">A little more birthday magic <span class="arrow">✧</span></button></section>
- </main><footer class="footer">Made with <span class="heart">♥</span> and a little bit of courage · For Gowthami · 12.10.2026</footer></div>
-<div class="overlay" id="letterOverlay" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><article class="letter-paper"><div class="letter-top">A letter for your birthday · 12 October 2026</div><h2 id="letterTitle">Dear Gowthami,</h2><p>Happy Birthday! ✿</p><p>I hope this new chapter brings you a hundred reasons to smile, people who treat you kindly, courage for the dreams you keep close, and little moments that turn into beautiful memories.</p><p>There is something genuinely lovely about the way you can make an ordinary day feel a little brighter. I wanted to give you something different this year—not something expensive, just a small corner of the internet made especially to celebrate you.</p><p>Keep smiling, keep growing, and keep being your own wonderful self. I hope today reminds you how much goodness you deserve—not only on your birthday, but on all the ordinary days in between.</p><p>May this year be kinder, brighter, and full of surprises you actually love. Have the loveliest birthday, Gowthami. ✨</p><div class="signature">With warm wishes,<br>Shalem</div><button class="letter-close" id="closeLetter">Fold this letter gently ✿</button></article></div>
+ </main><footer class="footer">Made with <span class="heart">♥</span> and a little bit of courage · For Gowthami · Gween · 12.10.2026</footer></div>
+<div class="overlay" id="letterOverlay" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><article class="letter-paper"><div class="letter-top">A letter for your birthday · 12 October 2026</div><h2 id="letterTitle">Dear Gween,</h2><p>Happy Birthday, Gween! ✿</p><p>I hope this new chapter brings you a hundred reasons to smile, people who treat you kindly, courage for the dreams you keep close, and little moments that turn into beautiful memories.</p><p>There is something genuinely lovely about the way you can make an ordinary day feel a little brighter. I wanted to give you something different this year—not something expensive, just a small corner of the internet made especially to celebrate you.</p><p>Keep smiling, keep growing, and keep being your own wonderful self. I hope today reminds you how much goodness you deserve—not only on your birthday, but on all the ordinary days in between.</p><p>May this year be kinder, brighter, and full of surprises you actually love. Have the loveliest birthday, Gween. ✨</p><div class="signature">With warm wishes,<br>Shalem</div><button class="letter-close" id="closeLetter">Fold this letter gently ✿</button></article></div>
 <div class="overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo preview"><div class="lightbox-inner"><button class="lightbox-close" id="closeLightbox">Close ×</button><img id="lightboxImage" alt="Expanded memory"></div></div>
 <script>
 (function(){
@@ -97,51 +114,25 @@
  function makePetals(n){const layer=$('#petals');for(let i=0;i<n;i++){const p=document.createElement('span');p.className='falling';p.textContent=['✿','✧','❀','·'][Math.floor(Math.random()*4)];p.style.left=(Math.random()*100)+'%';p.style.setProperty('--duration',(7+Math.random()*7)+'s');p.style.setProperty('--drift',((Math.random()-.5)*180)+'px');p.style.animationDelay=(Math.random()*3)+'s';p.style.fontSize=(11+Math.random()*13)+'px';layer.appendChild(p);window.setTimeout(function(){p.remove()},18000)}}
  $('.photo-frame').forEach(function(frame){const img=$('img',frame);if(frame.dataset.photo)img.src=frame.dataset.photo;img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')});img.addEventListener('error',function(){frame.classList.remove('has-photo')});frame.addEventListener('click',function(){if(frame.classList.contains('has-photo')){$('#lightboxImage').src=img.src;$('#lightbox').classList.add('open');document.body.classList.add('locked')}})});
  // The ZIP was uploaded to GitHub as one file, so unpack the images in the browser.
- async function loadPhotoArchive(){
-  const status=document.getElementById('photoLoadStatus');
-  try{
-   if(!window.JSZip){
-    const cdns=[
-     'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
-     'https://unpkg.com/jszip@3.10.1/dist/jszip.min.js'
-    ];
-    let loaded=false;
-    for(const src of cdns){
-     try{await new Promise(function(resolve,reject){const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=function(){reject(new Error('Could not load '+src))};document.head.appendChild(script)});if(window.JSZip){loaded=true;break}}catch(_error){}
-    }
-    if(!loaded&&!window.JSZip)throw new Error('The photo loader could not load from available CDNs.');
-   }
-   const archiveUrl=new URL('images/gowthami-birthday-photos.zip',document.baseURI);
-   let response=await fetch(archiveUrl.href,{cache:'no-store'});
-   if(!response.ok){
-    response=await fetch('https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-birthday-photos.zip',{cache:'no-store'});
-   }
-   if(!response.ok)throw new Error('Could not download the photo archive (HTTP '+response.status+').');
-   const archive=await JSZip.loadAsync(await response.arrayBuffer());
-   const setPhoto=async function(img,name,frame){
-    const zipped=archive.file('images/'+name);
-    if(!zipped)throw new Error('Photo is missing from the archive: '+name);
-    const blob=await zipped.async('blob');
-    const url=URL.createObjectURL(blob);
-    if(frame)img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')},{once:true});
-    img.src=url;
-   };
-   const main=$('.hero-main-photo img');if(main)await setPhoto(main,'gowthami-main.jpg');
-   const second=$('.float-secondary img');if(second)await setPhoto(second,'gowthami-standing-garden-pose.jpg');
-   const third=$('.float-third img');if(third)await setPhoto(third,'gowthami-standing-evening.jpg');
-   for(const frame of $$('.photo-frame')){
-    const img=$('img',frame);
-    const path=(frame.dataset.photo||img.getAttribute('src')||'').split('/').pop();
-    if(path)await setPhoto(img,path,frame);
-   }
-   if(status)status.textContent='All birthday photos are ready ✿';
-   console.info('Gowthami birthday photos loaded successfully.');
-  }catch(error){
-   console.error('Birthday photo archive:',error);
-   if(status)status.textContent='Photo loading issue: '+(error&&error.message?error.message:'unknown error');
-  }
- }
- loadPhotoArchive();
+
+ // Load the actual image files directly; no ZIP parser or external library is needed.
+ const photoStatus=$('#photoLoadStatus');
+ let visiblePhotos=0;
+ const checkPhotoStatus=function(){
+  if(photoStatus)photoStatus.textContent=visiblePhotos>0?'Birthday photos loaded ✿':'Loading her photos…';
+ };
+ $$('.photo-frame').forEach(function(frame){
+  const img=$('img',frame);
+  const markLoaded=function(){if(img.naturalWidth>0){frame.classList.add('has-photo');visiblePhotos++;checkPhotoStatus()}};
+  img.addEventListener('load',markLoaded);
+  img.addEventListener('error',function(){frame.classList.remove('has-photo');console.error('Could not load birthday photo:',img.src);if(photoStatus)photoStatus.textContent='A photo is missing from the images folder.'});
+  if(img.complete)markLoaded();
+  frame.addEventListener('click',function(){if(frame.classList.contains('has-photo')){$('#lightboxImage').src=img.src;$('#lightbox').classList.add('open');document.body.classList.add('locked')}});
+ });
+ $$('.hero-main-photo img, .floating-photo img').forEach(function(img){
+  img.addEventListener('error',function(){console.error('Could not load hero portrait:',img.src)});
+ });
+
  const observeEls=$$('.reveal, .memory-card');if('IntersectionObserver' in window){const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});observeEls.forEach(function(el){io.observe(el)})}else observeEls.forEach(function(el){el.classList.add('in')});
  const letterOverlay=$('#letterOverlay');const openLetter=function(){letterOverlay.classList.add('open');document.body.classList.add('locked');$('#closeLetter').focus()};const closeLetter=function(){letterOverlay.classList.remove('open');document.body.classList.remove('locked');$('#openLetter').focus()};
  $('#openLetter').addEventListener('click',openLetter);$('#closeLetter').addEventListener('click',closeLetter);
