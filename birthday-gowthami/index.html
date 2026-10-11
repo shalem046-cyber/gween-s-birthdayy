@@ -348,6 +348,13 @@
    musicWrap.hidden=true;playSong.setAttribute('aria-expanded','false');
   });
  }
+ // Attempt autoplay on entry; if the browser blocks sound, the surprise/music buttons retry after a tap.
+ if(backgroundAudio){
+  prepareTrack();
+  backgroundAudio.play().catch(function(){
+   setMusicStatus('Tap “Open your surprise” or the music button to start sound on your phone.');
+  });
+ }
  if(voiceToggle&&voiceRecorder){
   voiceToggle.addEventListener('click',function(){
    const opening=voiceRecorder.hidden;
