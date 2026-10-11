@@ -145,7 +145,7 @@
 .intro .flower.f3{animation-delay:.48s,1.88s}
 @keyframes flowerSway{0%,100%{transform:translateX(-50%) scale(1) rotate(-3deg)}50%{transform:translateX(-50%) scale(1) rotate(4deg)}}
 /* Floating song player; user click starts official video at 3:00 */
-.music-dock{position:fixed;right:16px;bottom:16px;z-index:160;width:min(360px,calc(100vw - 24px));font-family:"DM Sans",sans-serif}
+.music-dock{position:fixed;right:16px;bottom:16px;z-index:160;width:min(360px,calc(100vw - 24px));font-family:"DM Sans",sans-serif;opacity:0;pointer-events:none;visibility:hidden;transform:translateY(10px);transition:opacity .35s,transform .35s,visibility .35s}body.revealed .music-dock{opacity:1;pointer-events:auto;visibility:visible;transform:none}
 .music-trigger{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #ffffff5c;border-radius:999px;background:#642e43;color:#fff8f1;padding:11px 16px;box-shadow:0 12px 36px #31131f30;cursor:pointer;transition:transform .2s,background .2s}
 .music-trigger:hover{transform:translateY(-2px);background:#7b3c56}
 .music-note{display:grid;place-items:center;width:38px;height:38px;flex:none;background:#ffffff1c;border-radius:50%;font-size:1.5rem}
@@ -254,7 +254,7 @@
  const $=function(s,root){return (root||document).querySelector(s)};const $$=function(s,root){return Array.from((root||document).querySelectorAll(s))};
  const intro=$('#intro'),site=$('#site'),name='GOWTHAMI';
  $('#nameTitle').innerHTML=Array.from(name).map(function(ch,i){return '<span class="letter" style="--i:'+i+'">'+ch+'</span>'}).join('')+'<span class="dot">.</span>';
- $('#openSurprise').addEventListener('click',function(){intro.classList.add('out');site.classList.add('show');document.body.classList.remove('locked');window.setTimeout(function(){intro.remove()},1000);makePetals(30)});
+ $('#openSurprise').addEventListener('click',function(){intro.classList.add('out');site.classList.add('show');document.body.classList.remove('locked');document.body.classList.add('revealed');window.setTimeout(function(){intro.remove()},1000);makePetals(30)});
  function makePetals(n){const layer=$('#petals');for(let i=0;i<n;i++){const p=document.createElement('span');p.className='falling';p.textContent=['✿','✧','❀','·'][Math.floor(Math.random()*4)];p.style.left=(Math.random()*100)+'%';p.style.setProperty('--duration',(7+Math.random()*7)+'s');p.style.setProperty('--drift',((Math.random()-.5)*180)+'px');p.style.animationDelay=(Math.random()*3)+'s';p.style.fontSize=(11+Math.random()*13)+'px';layer.appendChild(p);window.setTimeout(function(){p.remove()},18000)}}
  $('.photo-frame').forEach(function(frame){const img=$('img',frame);if(frame.dataset.photo)img.src=frame.dataset.photo;img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')});img.addEventListener('error',function(){frame.classList.remove('has-photo')});frame.addEventListener('click',function(){if(frame.classList.contains('has-photo')){$('#lightboxImage').src=img.src;$('#lightbox').classList.add('open');document.body.classList.add('locked')}})});
  // The ZIP was uploaded to GitHub as one file, so unpack the images in the browser.
