@@ -166,6 +166,25 @@
 @media(max-width:520px){.intro-birthday{font-size:clamp(2.35rem,12.5vw,4.1rem);margin-bottom:18px}.music-dock{right:12px;bottom:12px;width:min(330px,calc(100vw - 24px))}.music-trigger{padding:9px 13px}}
 @media(prefers-reduced-motion:reduce){.intro-birthday,.intro-birthday span,.intro-birthday em,.bouquet,.intro .flower{animation:none!important}}
 
+
+/* Voice recorder */
+.voice-trigger{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:8px;padding:10px 13px;border:1px solid #d8b8b7;border-radius:999px;background:#fffaf5;color:var(--wine);font-size:.82rem;font-weight:600;cursor:pointer;box-shadow:0 8px 22px #31131f12}
+.voice-trigger:hover{background:#f7e9e3}
+.voice-recorder{margin-top:9px;padding:14px;border:1px solid #d9b8b7;border-radius:18px;background:#fffaf5;box-shadow:0 16px 50px #31131f20;color:var(--wine)}
+.voice-recorder[hidden]{display:none}
+.voice-recorder p{font-size:.73rem;line-height:1.6;color:#8e777d;margin:0 0 10px}
+.voice-recorder .voice-title{font:500 1.05rem "Playfair Display",Georgia,serif;color:var(--wine);margin-bottom:5px}
+.voice-actions{display:flex;gap:8px;flex-wrap:wrap}
+.voice-actions button,.voice-download{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:9px 13px;background:var(--wine);color:#fffaf5;font:600 .76rem "DM Sans",sans-serif;text-decoration:none;cursor:pointer}
+.voice-actions button.secondary{background:#efe0db;color:var(--wine);border:1px solid #d9b8b7}
+.voice-actions button:disabled{opacity:.45;cursor:not-allowed}
+.voice-status{margin:10px 0!important;padding:8px 10px;border-radius:10px;background:#f8eee8;color:#765b63!important}
+.voice-recorder audio{width:100%;height:38px;margin:5px 0 10px}
+.voice-download{width:100%;margin-top:5px}
+.voice-download[hidden]{display:none}
+.music-open-youtube{display:inline-block;margin:0 13px 12px;color:var(--wine);font-size:.72rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.overlay:not(.open){pointer-events:none}
+
 </style>
 </head>
 <body class="locked">
@@ -246,8 +265,93 @@
   <div class="music-player-head"><div><strong>Raanjhanaa · Title Track</strong><small>Starts at 3:00 · Official Sony Music video</small></div><button id="closeMusic" type="button" aria-label="Close music player">×</button></div>
   <div class="music-video"><iframe id="musicFrame" title="Raanjhanaa official music video starting at three minutes" allow="autoplay; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
   <p class="music-help">Keep this player open while you explore the surprise. If playback is blocked, tap Play in the video.</p>
+  <a class="music-open-youtube" id="openMusicYoutube" href="https://www.youtube.com/watch?v=vgm1u2gPxzw&amp;t=180s" target="_blank" rel="noopener noreferrer">Open the official song at 3:00 ↗</a>
+ </div>
+ <button class="voice-trigger" id="voiceToggle" type="button" aria-expanded="false" aria-controls="voiceRecorder">🎙 Record my singing</button>
+ <div class="voice-recorder" id="voiceRecorder" hidden>
+  <div class="voice-title">A little voice note</div>
+  <p>Record a singing clip with your microphone. It stays in this browser until you choose to download it—nothing uploads automatically.</p>
+  <div class="voice-actions"><button id="startVoice" type="button">● Start recording</button><button id="stopVoice" class="secondary" type="button" disabled>Stop</button></div>
+  <p class="voice-status" id="voiceStatus" role="status" aria-live="polite">Tap Start and allow microphone access when asked.</p>
+  <audio id="voicePreview" controls hidden></audio>
+  <a class="voice-download" id="downloadVoice" hidden download="shalem-voice-note.webm">Download my voice recording ↓</a>
  </div>
 </div>
+
+<script id="gween-media-controls">
+(function(){
+ const byId=function(id){return document.getElementById(id)};
+ const musicFrame=byId('musicFrame'),musicWrap=byId('musicPlayerWrap'),playSong=byId('playSong'),closeMusic=byId('closeMusic');
+ const voiceToggle=byId('voiceToggle'),voiceRecorder=byId('voiceRecorder'),startVoice=byId('startVoice'),stopVoice=byId('stopVoice'),voiceStatus=byId('voiceStatus'),voicePreview=byId('voicePreview'),downloadVoice=byId('downloadVoice');
+ let recorder=null,stream=null,chunks=[],recordedUrl=null;
+ if(playSong&&musicWrap&&musicFrame){
+  playSong.addEventListener('click',function(){
+   if(voiceRecorder)voiceRecorder.hidden=true;
+   if(voiceToggle)voiceToggle.setAttribute('aria-expanded','false');
+   musicWrap.hidden=false;
+   playSong.setAttribute('aria-expanded','true');
+   if(!musicFrame.getAttribute('src')){
+    musicFrame.src='https://www.youtube.com/embed/vgm1u2gPxzw?start=180&autoplay=1&controls=1&rel=0&playsinline=1';
+   }
+  });
+ }
+ if(closeMusic&&musicFrame&&musicWrap&&playSong){
+  closeMusic.addEventListener('click',function(){
+   musicWrap.hidden=true;playSong.setAttribute('aria-expanded','false');musicFrame.removeAttribute('src');
+  });
+ }
+ if(voiceToggle&&voiceRecorder){
+  voiceToggle.addEventListener('click',function(){
+   const opening=voiceRecorder.hidden;
+   voiceRecorder.hidden=!opening;
+   voiceToggle.setAttribute('aria-expanded',String(opening));
+   if(opening&&musicWrap){musicWrap.hidden=true;if(playSong)playSong.setAttribute('aria-expanded','false');if(musicFrame)musicFrame.removeAttribute('src')}
+  });
+ }
+ function setStatus(message){if(voiceStatus)voiceStatus.textContent=message}
+ if(startVoice){
+  startVoice.addEventListener('click',async function(){
+   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
+    setStatus('Voice recording is not supported in this browser. Open the site in updated Chrome or Edge, or record with your phone and send me the audio file.');
+    return;
+   }
+   startVoice.disabled=true;setStatus('Requesting microphone permission…');
+   try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks=[];
+    const types=['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus'];
+    const chosen=types.find(function(type){return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(type)});
+    recorder=chosen?new MediaRecorder(stream,{mimeType:chosen}):new MediaRecorder(stream);
+    recorder.addEventListener('dataavailable',function(event){if(event.data&&event.data.size)chunks.push(event.data)});
+    recorder.addEventListener('stop',function(){
+     if(stream)stream.getTracks().forEach(function(track){track.stop()});
+     const type=recorder&&recorder.mimeType?recorder.mimeType:(chunks[0]&&chunks[0].type)||'audio/webm';
+     const blob=new Blob(chunks,{type:type});
+     if(recordedUrl)URL.revokeObjectURL(recordedUrl);
+     recordedUrl=URL.createObjectURL(blob);
+     voicePreview.src=recordedUrl;voicePreview.hidden=false;
+     const extension=type.includes('mp4')?'m4a':type.includes('ogg')?'ogg':'webm';
+     downloadVoice.href=recordedUrl;downloadVoice.download='shalem-voice-note.'+extension;downloadVoice.hidden=false;
+     setStatus('Recording ready. Play it back, then download it to send it to Shalem’s page.');
+     startVoice.disabled=false;stopVoice.disabled=true;recorder=null;stream=null;
+    });
+    recorder.start();
+    setStatus('Recording now — sing freely! Press Stop when you finish.');
+    stopVoice.disabled=false;
+   }catch(error){
+    if(stream)stream.getTracks().forEach(function(track){track.stop()});
+    stream=null;recorder=null;startVoice.disabled=false;stopVoice.disabled=true;
+    setStatus(error&&error.name==='NotAllowedError'?'Microphone access was blocked. Allow microphone access in the browser address-bar settings, then try again.':'Could not start the microphone. Check that it is connected and try again.');
+   }
+  });
+ }
+ if(stopVoice){
+  stopVoice.addEventListener('click',function(){
+   if(recorder&&recorder.state!=='inactive'){stopVoice.disabled=true;setStatus('Finishing your recording…');recorder.stop()}
+  });
+ }
+})();
+</script>
 
 <script>
 (function(){
@@ -255,6 +359,15 @@
  const intro=$('#intro'),site=$('#site'),name='GOWTHAMI';
  $('#nameTitle').innerHTML=Array.from(name).map(function(ch,i){return '<span class="letter" style="--i:'+i+'">'+ch+'</span>'}).join('')+'<span class="dot">.</span>';
  $('#openSurprise').addEventListener('click',function(){intro.classList.add('out');site.classList.add('show');document.body.classList.remove('locked');document.body.classList.add('revealed');window.setTimeout(function(){intro.remove()},1000);makePetals(30)});
+ // Bind the important controls before photo loading, so a missing image cannot disable them.
+ const letterOverlay=$('#letterOverlay');
+ const openLetter=function(){if(!letterOverlay)return;letterOverlay.classList.add('open');document.body.classList.add('locked');const closeButton=$('#closeLetter');if(closeButton)closeButton.focus()};
+ const closeLetter=function(){if(!letterOverlay)return;letterOverlay.classList.remove('open');document.body.classList.remove('locked');const openButton=$('#openLetter');if(openButton)openButton.focus()};
+ const letterButton=$('#openLetter'),letterCloseButton=$('#closeLetter'),magicButton=$('#celebrate');
+ if(letterButton)letterButton.addEventListener('click',openLetter);
+ if(letterCloseButton)letterCloseButton.addEventListener('click',closeLetter);
+ if(magicButton)magicButton.addEventListener('click',function(){confetti();makePetals(20);magicButton.innerHTML='Made with a little extra magic <span class="arrow">♥</span>';magicButton.setAttribute('aria-label','Made with a little extra magic')});
+
  function makePetals(n){const layer=$('#petals');for(let i=0;i<n;i++){const p=document.createElement('span');p.className='falling';p.textContent=['✿','✧','❀','·'][Math.floor(Math.random()*4)];p.style.left=(Math.random()*100)+'%';p.style.setProperty('--duration',(7+Math.random()*7)+'s');p.style.setProperty('--drift',((Math.random()-.5)*180)+'px');p.style.animationDelay=(Math.random()*3)+'s';p.style.fontSize=(11+Math.random()*13)+'px';layer.appendChild(p);window.setTimeout(function(){p.remove()},18000)}}
  $$('.photo-frame').forEach(function(frame){const img=$('img',frame);if(frame.dataset.photo)img.src=frame.dataset.photo;img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')});img.addEventListener('error',function(){frame.classList.remove('has-photo')});frame.addEventListener('click',function(){if(frame.classList.contains('has-photo')){$('#lightboxImage').src=img.src;$('#lightbox').classList.add('open');document.body.classList.add('locked')}})});
  // The ZIP was uploaded to GitHub as one file, so unpack the images in the browser.
@@ -278,30 +391,12 @@
  });
 
  const observeEls=$$('.reveal, .memory-card');if('IntersectionObserver' in window){const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});observeEls.forEach(function(el){io.observe(el)})}else observeEls.forEach(function(el){el.classList.add('in')});
- const letterOverlay=$('#letterOverlay');const openLetter=function(){letterOverlay.classList.add('open');document.body.classList.add('locked');$('#closeLetter').focus()};const closeLetter=function(){letterOverlay.classList.remove('open');document.body.classList.remove('locked');$('#openLetter').focus()};
- $('#openLetter').addEventListener('click',openLetter);$('#closeLetter').addEventListener('click',closeLetter);
+ // Letter controls are already bound before photo setup.
  [letterOverlay,$('#lightbox')].forEach(function(el){el.addEventListener('click',function(e){if(e.target===el){el.classList.remove('open');document.body.classList.remove('locked')}})});
  $('#closeLightbox').addEventListener('click',function(){$('#lightbox').classList.remove('open');document.body.classList.remove('locked')});
  document.addEventListener('keydown',function(e){if(e.key==='Escape'){[letterOverlay,$('#lightbox')].forEach(function(el){el.classList.remove('open')});document.body.classList.remove('locked')}});
  function confetti(){const symbols=['✦','✿','♥','·','✧'];for(let i=0;i<90;i++){const p=document.createElement('i');p.className='sprinkle';p.textContent=symbols[Math.floor(Math.random()*symbols.length)];p.style.left=(Math.random()*100)+'%';p.style.color=['#d88e96','#b58b54','#748776','#fff3e9','#a95769'][Math.floor(Math.random()*5)];p.style.fontSize=(10+Math.random()*12)+'px';p.style.setProperty('--x',((Math.random()-.5)*260)+'px');p.style.setProperty('--rot',(Math.random()*900-450)+'deg');p.style.animationDelay=(Math.random()*.6)+'s';document.body.appendChild(p);window.setTimeout(function(){p.remove()},4100)}}
- $('#celebrate').addEventListener('click',function(){confetti();makePetals(20);$('#celebrate').innerHTML='Made with a little extra magic <span class="arrow">♥</span>'});
+ // The final magic button is already bound before photo setup.
 })();
-
- // Start the licensed official YouTube embed only after a direct user click.
- const musicFrame=$('#musicFrame');
- const musicWrap=$('#musicPlayerWrap');
- const playSong=$('#playSong');
- playSong.addEventListener('click',function(){
-  musicWrap.hidden=false;
-  playSong.setAttribute('aria-expanded','true');
-  if(!musicFrame.getAttribute('src')){
-   musicFrame.src='https://www.youtube-nocookie.com/embed/vgm1u2gPxzw?start=180&autoplay=1&controls=1&rel=0&playsinline=1';
-  }
- });
- $('#closeMusic').addEventListener('click',function(){
-  musicWrap.hidden=true;
-  playSong.setAttribute('aria-expanded','false');
-  musicFrame.removeAttribute('src');
- });
 
 </script></body></html>
