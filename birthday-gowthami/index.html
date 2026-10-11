@@ -129,6 +129,43 @@
 .letter-close{font-size:.8rem;letter-spacing:.025em;background:#fff9f1}
 @media(prefers-reduced-motion:reduce){.overlay.open .letter-paper,.letter-seal{animation:none!important}}
 
+
+/* Welcome: large birthday headline and gently animated flowers */
+.intro-inner{max-width:760px}
+.intro-birthday{display:flex;flex-direction:column;align-items:center;gap:0;margin:-2px auto 18px;color:var(--wine);font:700 clamp(2.55rem,9vw,6.25rem)/.82 "Playfair Display",Georgia,serif;letter-spacing:.035em;text-shadow:0 5px 25px #642e4310;animation:birthdayHeadlineIn 1s cubic-bezier(.2,.8,.2,1) both}
+.intro-birthday span{animation:birthdayWordIn .9s .08s both}
+.intro-birthday em{font-weight:500;color:#a95769;font-size:1.08em;letter-spacing:-.035em;margin-top:8px;animation:birthdayWordIn 1s .24s both}
+@keyframes birthdayHeadlineIn{from{opacity:0;filter:blur(5px)}to{opacity:1;filter:blur(0)}}
+@keyframes birthdayWordIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.bouquet{animation:bouquetFloat 5.5s ease-in-out infinite}
+@keyframes bouquetFloat{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.intro .flower{animation-name:bloom,flowerSway;animation-duration:1.15s,4.5s;animation-timing-function:cubic-bezier(.17,.76,.3,1.22),ease-in-out;animation-delay:0s,1.4s;animation-fill-mode:forwards,both;animation-iteration-count:1,infinite}
+.intro .flower.f1{animation-delay:.15s,1.55s}
+.intro .flower.f2{animation-delay:.32s,1.72s}
+.intro .flower.f3{animation-delay:.48s,1.88s}
+@keyframes flowerSway{0%,100%{transform:translateX(-50%) scale(1) rotate(-3deg)}50%{transform:translateX(-50%) scale(1) rotate(4deg)}}
+/* Floating song player; user click starts official video at 3:00 */
+.music-dock{position:fixed;right:16px;bottom:16px;z-index:160;width:min(360px,calc(100vw - 24px));font-family:"DM Sans",sans-serif}
+.music-trigger{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #ffffff5c;border-radius:999px;background:#642e43;color:#fff8f1;padding:11px 16px;box-shadow:0 12px 36px #31131f30;cursor:pointer;transition:transform .2s,background .2s}
+.music-trigger:hover{transform:translateY(-2px);background:#7b3c56}
+.music-note{display:grid;place-items:center;width:38px;height:38px;flex:none;background:#ffffff1c;border-radius:50%;font-size:1.5rem}
+.music-trigger-copy{display:flex;flex-direction:column;gap:3px;flex:1}
+.music-trigger-copy strong{font:500 1.05rem "Playfair Display",Georgia,serif}
+.music-trigger-copy small{font-size:.68rem;letter-spacing:.04em;color:#f0d9df}
+.music-arrow{font-size:1.2rem}
+.music-player-wrap{margin-top:9px;overflow:hidden;border:1px solid #d9b8b7;border-radius:18px;background:#fffaf5;box-shadow:0 16px 50px #31131f30}
+.music-player-wrap[hidden]{display:none}
+.music-player-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;color:var(--wine)}
+.music-player-head div{display:flex;flex-direction:column;gap:4px}
+.music-player-head strong{font:500 1rem "Playfair Display",Georgia,serif}
+.music-player-head small{font-size:.68rem;color:#8e777d}
+.music-player-head button{width:30px;height:30px;border:1px solid #dfc4c0;background:#fff;color:var(--wine);border-radius:50%;font-size:1.2rem;cursor:pointer}
+.music-video{aspect-ratio:16/9;background:#261923}
+.music-video iframe{width:100%;height:100%;border:0;display:block}
+.music-help{font-size:.69rem;line-height:1.5;color:#8e777d;margin:0;padding:9px 13px 12px}
+@media(max-width:520px){.intro-birthday{font-size:clamp(2.35rem,12.5vw,4.1rem);margin-bottom:18px}.music-dock{right:12px;bottom:12px;width:min(330px,calc(100vw - 24px))}.music-trigger{padding:9px 13px}}
+@media(prefers-reduced-motion:reduce){.intro-birthday,.intro-birthday span,.intro-birthday em,.bouquet,.intro .flower{animation:none!important}}
+
 </style>
 </head>
 <body class="locked">
@@ -138,7 +175,7 @@
  <div class="flower f1"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div>
  <div class="flower f2"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div>
  <div class="flower f3"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div></div>
- <div class="intro-kicker">A little something, just for Gween</div><h1>For Gween</h1><p>A little birthday garden for Gowthami — with love for the nickname that makes this surprise yours.</p><div class="birthday-date intro-date"><span class="date-label">YOUR SPECIAL DAY</span><strong>12 OCTOBER 2026</strong><span class="date-extra">MONDAY · MADE JUST FOR YOU</span></div><button class="btn" id="openSurprise">Open your surprise <span class="arrow">↗</span></button>
+ <div class="intro-birthday" aria-label="Happiest Birthday"><span>HAPPIEST</span><em>BIRTHDAY</em></div><div class="intro-kicker">A little something, just for Gween</div><h1>For Gween</h1><p>A little birthday garden for Gowthami — with love for the nickname that makes this surprise yours.</p><div class="birthday-date intro-date"><span class="date-label">YOUR SPECIAL DAY</span><strong>12 OCTOBER 2026</strong><span class="date-extra">MONDAY · MADE JUST FOR YOU</span></div><button class="btn" id="openSurprise">Open your surprise <span class="arrow">↗</span></button>
 </div></section>
 <div class="site" id="site">
  <nav class="nav"><div class="brand">a little <span>✿</span> surprise</div><a class="nav-gallery" href="https://shalem046-cyber.github.io/gween-s-birthdayy/gallery.html">Gween’s photo gallery ↗</a><div class="nav-note">MONDAY · 12 OCTOBER 2026</div></nav>
@@ -198,6 +235,20 @@
  </main><footer class="footer">Made with <span class="heart">♥</span> and a little bit of courage · For Gowthami · Gween · 12.10.2026</footer></div>
 <div class="overlay" id="letterOverlay" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><article class="letter-paper"><div class="letter-top">A little birthday letter · 12 October 2026</div><div class="letter-seal" aria-hidden="true">✿</div><h2 id="letterTitle">Dear Gween,</h2><p class="letter-greeting">Happiest birthday to you, yarr! 🤍</p><p>I hope this day turns out to be a great one for you — full of lovely little moments, laughter, and reasons to smile. I really hope this small surprise made you smile too. I put it together with care, just to make your day feel a little more special.</p><div class="letter-divider" aria-hidden="true">✧ &nbsp; ✿ &nbsp; ✧</div><p class="letter-quote">Some people become a beautiful part of our memories without even knowing how special they are. You’ll always be one of them.</p><p class="letter-birthday-end">Happy Birthday, Gween! 🤍✨</p><p>May the year ahead bring you happiness, kind people, wonderful memories, and plenty of moments that make you proud to be yourself. Keep shining in your own way.</p><div class="signature">With warm wishes,<br><span>Shalem 🤍</span></div><button class="letter-close" id="closeLetter">Fold this letter gently ✿</button></article></div>
 <div class="overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo preview"><div class="lightbox-inner"><button class="lightbox-close" id="closeLightbox">Close ×</button><img id="lightboxImage" alt="Expanded memory"></div></div>
+
+<div class="music-dock" id="musicDock">
+ <button class="music-trigger" id="playSong" type="button" aria-expanded="false" aria-controls="musicPlayerWrap">
+  <span class="music-note" aria-hidden="true">♫</span>
+  <span class="music-trigger-copy"><strong>Raanjhanaa</strong><small>Play the song from 3:00</small></span>
+  <span class="music-arrow" aria-hidden="true">↗</span>
+ </button>
+ <div class="music-player-wrap" id="musicPlayerWrap" hidden>
+  <div class="music-player-head"><div><strong>Raanjhanaa · Title Track</strong><small>Starts at 3:00 · Official Sony Music video</small></div><button id="closeMusic" type="button" aria-label="Close music player">×</button></div>
+  <div class="music-video"><iframe id="musicFrame" title="Raanjhanaa official music video starting at three minutes" allow="autoplay; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+  <p class="music-help">Keep this player open while you explore the surprise. If playback is blocked, tap Play in the video.</p>
+ </div>
+</div>
+
 <script>
 (function(){
  const $=function(s,root){return (root||document).querySelector(s)};const $$=function(s,root){return Array.from((root||document).querySelectorAll(s))};
@@ -235,4 +286,22 @@
  function confetti(){const symbols=['✦','✿','♥','·','✧'];for(let i=0;i<90;i++){const p=document.createElement('i');p.className='sprinkle';p.textContent=symbols[Math.floor(Math.random()*symbols.length)];p.style.left=(Math.random()*100)+'%';p.style.color=['#d88e96','#b58b54','#748776','#fff3e9','#a95769'][Math.floor(Math.random()*5)];p.style.fontSize=(10+Math.random()*12)+'px';p.style.setProperty('--x',((Math.random()-.5)*260)+'px');p.style.setProperty('--rot',(Math.random()*900-450)+'deg');p.style.animationDelay=(Math.random()*.6)+'s';document.body.appendChild(p);window.setTimeout(function(){p.remove()},4100)}}
  $('#celebrate').addEventListener('click',function(){confetti();makePetals(20);$('#celebrate').innerHTML='Made with a little extra magic <span class="arrow">♥</span>'});
 })();
+
+ // Start the licensed official YouTube embed only after a direct user click.
+ const musicFrame=$('#musicFrame');
+ const musicWrap=$('#musicPlayerWrap');
+ const playSong=$('#playSong');
+ playSong.addEventListener('click',function(){
+  musicWrap.hidden=false;
+  playSong.setAttribute('aria-expanded','true');
+  if(!musicFrame.getAttribute('src')){
+   musicFrame.src='https://www.youtube-nocookie.com/embed/vgm1u2gPxzw?start=180&autoplay=1&controls=1&rel=0&playsinline=1';
+  }
+ });
+ $('#closeMusic').addEventListener('click',function(){
+  musicWrap.hidden=true;
+  playSong.setAttribute('aria-expanded','false');
+  musicFrame.removeAttribute('src');
+ });
+
 </script></body></html>
