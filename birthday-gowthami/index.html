@@ -116,7 +116,7 @@
    const main=$('.hero-main-photo img');if(main)await setPhoto(main,'gowthami-main.jpg');
    const second=$('.float-secondary img');if(second)await setPhoto(second,'gowthami-standing-garden-pose.jpg');
    const third=$('.float-third img');if(third)await setPhoto(third,'gowthami-standing-evening.jpg');
-   for(const frame of $('.photo-frame')){
+   for(const frame of $$('.photo-frame')){
     const img=$('img',frame);
     const path=(frame.dataset.photo||img.getAttribute('src')||'').split('/').pop();
     if(path)await setPhoto(img,path,frame);
