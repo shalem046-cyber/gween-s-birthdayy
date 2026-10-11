@@ -48,7 +48,7 @@ h1 em{color:var(--rose)}
 .btn{display:inline-block;padding:13px 23px;border-radius:999px;background:#fff4e9;color:var(--wine);text-decoration:none;font-weight:600;font-size:.85rem;margin-top:10px}
 footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font-size:.72rem}
 @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card img{height:clamp(230px,58vw,400px)}}
-@media(max-width:520px){.top{flex-wrap:wrap}.grid{grid-template-columns:1fr;max-width:390px;margin:0 auto}.card img{height:auto;max-height:520px;aspect-ratio:4/5}.gallery{padding-top:45px}.hero{padding-top:56px}}
+@media(max-width:520px){.top{flex-wrap:wrap}.grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;margin:0 auto}.card img{height:auto;max-height:none;aspect-ratio:4/5}.gallery{padding-top:45px}.hero{padding-top:56px}}
 
 /* All gallery images are direct public URLs and always visible */
 .card img{display:block!important;opacity:1!important;visibility:visible!important;min-height:240px}
@@ -58,6 +58,58 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
 .image-fallback{min-height:240px;display:grid;place-items:center;background:#f2dfd9;color:#a95769;font:italic 1rem "Playfair Display",Georgia,serif}
 #photoGrid .card img{display:block!important;opacity:1!important;visibility:visible!important}
 #photoGrid .card img[style*="display: none"]{display:none!important}
+
+
+/* Polished album, accessible photo lightbox, and local background music */
+.top{position:sticky;top:0;z-index:30;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.hero{position:relative;overflow:hidden}
+.hero:after{content:"✿";position:absolute;right:clamp(18px,8vw,120px);top:35px;color:#b58b5430;font-size:clamp(4rem,10vw,8rem);pointer-events:none;transform:rotate(16deg)}
+.card{border-radius:16px;overflow:hidden;box-shadow:0 12px 34px #642e4310}
+.card img{border-radius:9px;transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .35s}
+.card a:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:10px}
+.card:hover img{transform:scale(1.025);filter:saturate(1.04)}
+.title{font-size:clamp(1rem,2vw,1.24rem)}
+.desc{max-width:34ch;margin-inline:auto}
+.photo-lightbox{position:fixed;inset:0;z-index:200;background:#1d1119f2;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:clamp(8px,3vw,26px);padding:clamp(14px,4vw,44px);color:#fff8f1}
+.photo-lightbox[hidden]{display:none}
+.photo-lightbox figure{margin:0;min-width:0;display:grid;justify-items:center;gap:14px}
+.photo-lightbox img{display:block;max-width:min(80vw,1100px);max-height:78vh;object-fit:contain;border-radius:8px;box-shadow:0 18px 70px #0006}
+.photo-lightbox figcaption{font:italic 1.2rem "Playfair Display",Georgia,serif;text-align:center;color:#f5d8d4}
+.lightbox-close{position:absolute;right:18px;top:16px;border:1px solid #fff5;border-radius:999px;padding:9px 14px;background:#ffffff10;color:#fff8f1;cursor:pointer}
+.lightbox-arrow{width:44px;height:44px;border:1px solid #fff5;border-radius:50%;background:#ffffff10;color:#fff8f1;font-size:1.45rem;cursor:pointer}
+.lightbox-hint{position:absolute;left:0;right:0;bottom:12px;text-align:center;color:#ffffffa8;font-size:.7rem;letter-spacing:.08em}
+.gallery-music-dock{position:fixed;z-index:80;right:14px;bottom:14px;width:min(320px,calc(100vw - 28px));border:1px solid #ffffffb8;border-radius:20px;padding:8px;background:#fffaf5ed;box-shadow:0 14px 44px #3b1c2c25;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.gallery-music-dock button{display:flex;width:100%;align-items:center;gap:11px;border:0;border-radius:14px;padding:10px 13px;background:var(--wine);color:#fff8f1;text-align:left;cursor:pointer;transition:transform .2s,background .2s}
+.gallery-music-dock button:hover{background:#7b3c56;transform:translateY(-1px)}
+.gallery-music-icon{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#ffffff20;font-size:1.25rem;flex:none}
+.gallery-music-copy{display:grid;gap:3px;min-width:0}
+.gallery-music-copy strong{font:500 1rem "Playfair Display",Georgia,serif}
+.gallery-music-copy small{font-size:.67rem;color:#f0d9df;line-height:1.35}
+#galleryMusicStatus{margin:7px 7px 2px;color:var(--muted);font-size:.66rem;line-height:1.45}
+#galleryAudio{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+@media(max-width:520px){
+ .top{gap:12px;padding:16px}
+ .hero{padding:54px 18px 42px}
+ .hero:after{right:4px;top:8px;font-size:4rem}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;margin:0 auto;gap:11px}
+ .card{padding:7px 7px 12px}
+ .card img{height:auto;min-height:0;aspect-ratio:4/5;object-fit:cover}
+ .card figcaption{padding-top:10px}
+ .num{font-size:.55rem;letter-spacing:.12em}
+ .title{font-size:1rem;line-height:1.25}
+ .desc{font-size:.7rem;line-height:1.45}
+ .gallery{padding:38px 12px 90px}
+ .quote{padding:48px 18px}
+ .end{padding:48px 18px 66px}
+ .photo-lightbox{grid-template-columns:34px minmax(0,1fr) 34px;gap:5px;padding:58px 8px 44px}
+ .lightbox-arrow{width:34px;height:34px;font-size:1.1rem}
+ .photo-lightbox img{max-width:100%;max-height:72vh}
+ .photo-lightbox figcaption{font-size:1rem}
+ .lightbox-close{right:12px;top:12px}
+ .lightbox-hint{font-size:.6rem;bottom:9px}
+ .gallery-music-dock{right:10px;bottom:10px;width:min(300px,calc(100vw - 20px))}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card,.card img,.gallery-music-dock button{transition:none!important}.card:hover img{transform:none}}
 
 </style>
 </head>
@@ -78,6 +130,23 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
 <section class="end"><div class="kicker" style="color:#e9bdb4">12 · 10 · 2026</div><h2>Keep being beautifully you.</h2><p>Happy Birthday, Gween. May your year be kind, bright, and full of lovely memories.</p><a class="btn" href="https://shalem046-cyber.github.io/gween-s-birthdayy/birthday-gowthami/">Back to your surprise ✿</a></section>
 <footer>Made with ♥ for Gowthami · Gween · 12 October 2026</footer>
 
+
+<div class="photo-lightbox" id="photoLightbox" hidden role="dialog" aria-modal="true" aria-label="Photo preview">
+ <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close photo preview">Close ×</button>
+ <button class="lightbox-arrow" id="lightboxPrev" type="button" aria-label="Previous photo">‹</button>
+ <figure><img id="lightboxImage" alt=""><figcaption id="lightboxCaption"></figcaption></figure>
+ <button class="lightbox-arrow" id="lightboxNext" type="button" aria-label="Next photo">›</button>
+ <div class="lightbox-hint">USE ← → TO BROWSE · ESC TO CLOSE</div>
+</div>
+<div class="gallery-music-dock">
+ <button id="galleryMusicToggle" type="button" aria-label="Play birthday background music">
+  <span class="gallery-music-icon" aria-hidden="true">♫</span>
+  <span class="gallery-music-copy"><strong>Music for this moment</strong><small id="galleryMusicLabel">Background song · starts at 3:00</small></span>
+ </button>
+ <p id="galleryMusicStatus" role="status" aria-live="polite">Trying to start the background song…</p>
+ <audio id="galleryAudio" preload="metadata" playsinline></audio>
+</div>
+
 <script>
 (function(){
  const repoOwner='shalem046-cyber';
@@ -86,6 +155,42 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
  const rawBase='https://raw.githubusercontent.com/'+repoOwner+'/'+repoName+'/main/'+folder+'/';
  const status=document.getElementById('galleryStatus');
  const grid=document.getElementById('photoGrid');
+ const lightbox=document.getElementById('photoLightbox');
+ const lightboxImage=document.getElementById('lightboxImage');
+ const lightboxCaption=document.getElementById('lightboxCaption');
+ const lightboxClose=document.getElementById('lightboxClose');
+ const lightboxPrev=document.getElementById('lightboxPrev');
+ const lightboxNext=document.getElementById('lightboxNext');
+ let activePhotos=[],activePhotoIndex=0;
+ function photoURL(file){return file.download_url||rawBase+encodeURIComponent(file.name);}
+ function openLightbox(index){
+  if(!activePhotos.length||!lightbox)return;
+  activePhotoIndex=(index+activePhotos.length)%activePhotos.length;
+  const file=activePhotos[activePhotoIndex];
+  lightboxImage.src=photoURL(file);
+  lightboxImage.alt='Gowthami — '+descriptionFor(file.name,activePhotoIndex)[1];
+  lightboxCaption.textContent=descriptionFor(file.name,activePhotoIndex)[1];
+  lightbox.hidden=false;
+  document.body.style.overflow='hidden';
+  if(lightboxClose)lightboxClose.focus();
+ }
+ function closeLightbox(){
+  if(!lightbox)return;
+  lightbox.hidden=true;
+  document.body.style.overflow='';
+  lightboxImage.removeAttribute('src');
+ }
+ if(lightboxClose)lightboxClose.addEventListener('click',closeLightbox);
+ if(lightboxPrev)lightboxPrev.addEventListener('click',function(){openLightbox(activePhotoIndex-1)});
+ if(lightboxNext)lightboxNext.addEventListener('click',function(){openLightbox(activePhotoIndex+1)});
+ if(lightbox)lightbox.addEventListener('click',function(event){if(event.target===lightbox)closeLightbox()});
+ document.addEventListener('keydown',function(event){
+  if(!lightbox||lightbox.hidden)return;
+  if(event.key==='Escape')closeLightbox();
+  if(event.key==='ArrowLeft')openLightbox(activePhotoIndex-1);
+  if(event.key==='ArrowRight')openLightbox(activePhotoIndex+1);
+ });
+
  const featured=['gowthami-main.jpg','gowthami-standing-garden-pose.jpg','gowthami-standing-evening.jpg'];
  const known=[
   'gowthami-main.jpg','gowthami-standing-garden-pose.jpg','gowthami-standing-evening.jpg',
@@ -113,10 +218,11 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
  }
  function addCard(file,index){
   const name=file.name;
-  const src=file.download_url||rawBase+encodeURIComponent(name);
+  const src=photoURL(file);
   const details=descriptionFor(name,index);
   const figure=document.createElement('figure');figure.className='card';
   const link=document.createElement('a');link.href=src;link.target='_blank';link.rel='noopener';link.setAttribute('aria-label','Open '+details[1]+' full size');
+  link.addEventListener('click',function(event){event.preventDefault();openLightbox(index)});
   const img=document.createElement('img');img.src=src;img.alt='Gowthami — '+details[1];img.loading=index<3?'eager':'lazy';img.decoding='async';
   img.addEventListener('error',function(){img.style.display='none';const fallback=document.createElement('div');fallback.className='image-fallback';fallback.textContent='Photo unavailable';link.appendChild(fallback);});
   link.appendChild(img);figure.appendChild(link);
@@ -138,9 +244,64 @@ footer{text-align:center;padding:18px;background:var(--cream);color:#a38d91;font
    return a.name.localeCompare(b.name);
   });
   grid.textContent='';
+  activePhotos=images;
   images.forEach(addCard);
   if(status)status.textContent=images.length+' photos in Gween’s album ✿';
  }
+
+ const galleryAudio=document.getElementById('galleryAudio');
+ const musicToggle=document.getElementById('galleryMusicToggle');
+ const musicLabel=document.getElementById('galleryMusicLabel');
+ const musicStatus=document.getElementById('galleryMusicStatus');
+ const LOCAL_TRACK_URL='birthday-gowthami/audio/background-music.mp3';
+ function musicMessage(message){if(musicStatus)musicStatus.textContent=message;}
+ function loadLocalTrack(){
+  if(!galleryAudio)return;
+  if(!galleryAudio.getAttribute('src')){
+   galleryAudio.src=LOCAL_TRACK_URL;
+   galleryAudio.load();
+  }
+ }
+ if(galleryAudio){
+  galleryAudio.addEventListener('loadedmetadata',function(){
+   try{galleryAudio.currentTime=galleryAudio.duration>180?180:0;}catch(error){}
+  });
+  galleryAudio.addEventListener('play',function(){
+   if(musicLabel)musicLabel.textContent='Now playing · starting at 3:00';
+   if(musicToggle)musicToggle.setAttribute('aria-label','Pause birthday background music');
+   musicMessage('The background song is playing. Tap the button to pause.');
+  });
+  galleryAudio.addEventListener('pause',function(){
+   if(musicLabel)musicLabel.textContent='Background song · starts at 3:00';
+   if(musicToggle)musicToggle.setAttribute('aria-label','Play birthday background music');
+  });
+  galleryAudio.addEventListener('ended',function(){
+   try{galleryAudio.currentTime=galleryAudio.duration>180?180:0;}catch(error){}
+   galleryAudio.play().catch(function(){musicMessage('Tap the music button to continue listening.');});
+  });
+  galleryAudio.addEventListener('error',function(){
+   musicMessage('Song file not added yet. Add a licensed MP3 at birthday-gowthami/audio/background-music.mp3.');
+  });
+ }
+ async function toggleGalleryMusic(){
+  if(!galleryAudio)return;
+  if(!galleryAudio.paused){galleryAudio.pause();return;}
+  loadLocalTrack();
+  try{
+   if(galleryAudio.readyState>=1)galleryAudio.currentTime=galleryAudio.duration>180?180:0;
+   await galleryAudio.play();
+  }catch(error){
+   musicMessage('Your phone may block autoplay. Tap again after the song file is added.');
+  }
+ }
+ if(musicToggle)musicToggle.addEventListener('click',toggleGalleryMusic);
+ // Attempt autoplay on entry. Most phones require one tap; the music pill remains available.
+ loadLocalTrack();
+ if(galleryAudio){
+  const autoplay=galleryAudio.play();
+  if(autoplay&&typeof autoplay.catch==='function')autoplay.catch(function(){musicMessage('Tap “Music for this moment” to start the song.');});
+ }
+
  const fallback=known.map(function(name){return {name:name,download_url:rawBase+name};});
  paint(fallback);
  fetch('https://api.github.com/repos/'+repoOwner+'/'+repoName+'/contents/'+folder+'?ref=main',{headers:{'Accept':'application/vnd.github+json'}})
