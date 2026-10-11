@@ -43,7 +43,7 @@
 </style><script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body class="locked">
-<div id="petals" aria-hidden="true"></div><div id="photoLoadStatus" role="status" aria-live="polite" style="position:fixed;left:10px;bottom:10px;z-index:90;padding:6px 10px;border-radius:20px;background:#fffaf0cc;color:#89767b;font:11px sans-serif;pointer-events:none"></div>
+<div id="petals" aria-hidden="true"></div><div id="photoLoadStatus" role="status" aria-live="polite" style="position:fixed;left:10px;bottom:10px;z-index:90;padding:6px 10px;border-radius:20px;background:#fffaf0cc;color:#89767b;font:11px sans-serif;pointer-events:none">Preparing birthday photos…</div>
 <section class="intro" id="intro" aria-label="Birthday welcome"><div class="intro-inner">
  <div class="bouquet" aria-hidden="true"><div class="stem s1"></div><div class="stem s2"></div><div class="stem s3"></div><div class="leaf"></div><div class="leaf l2"></div>
  <div class="flower f1"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="flower-center"></i></div>
@@ -100,9 +100,22 @@
  async function loadPhotoArchive(){
   const status=document.getElementById('photoLoadStatus');
   try{
-   if(!window.JSZip)throw new Error('The photo loader library did not load.');
+   if(!window.JSZip){
+    const cdns=[
+     'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
+     'https://unpkg.com/jszip@3.10.1/dist/jszip.min.js'
+    ];
+    let loaded=false;
+    for(const src of cdns){
+     try{await new Promise(function(resolve,reject){const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=function(){reject(new Error('Could not load '+src))};document.head.appendChild(script)});if(window.JSZip){loaded=true;break}}catch(_error){}
+    }
+    if(!loaded&&!window.JSZip)throw new Error('The photo loader could not load from available CDNs.');
+   }
    const archiveUrl=new URL('images/gowthami-birthday-photos.zip',document.baseURI);
-   const response=await fetch(archiveUrl.href,{cache:'no-store'});
+   let response=await fetch(archiveUrl.href,{cache:'no-store'});
+   if(!response.ok){
+    response=await fetch('https://raw.githubusercontent.com/shalem046-cyber/gween-s-birthdayy/main/birthday-gowthami/images/gowthami-birthday-photos.zip',{cache:'no-store'});
+   }
    if(!response.ok)throw new Error('Could not download the photo archive (HTTP '+response.status+').');
    const archive=await JSZip.loadAsync(await response.arrayBuffer());
    const setPhoto=async function(img,name,frame){
