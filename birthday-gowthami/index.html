@@ -125,7 +125,7 @@
    console.info('Gowthami birthday photos loaded successfully.');
   }catch(error){
    console.error('Birthday photo archive:',error);
-   if(status)status.textContent='Photos could not load yet. Refresh the page and check the image archive path.';
+   if(status)status.textContent='Photo loading issue: '+(error&&error.message?error.message:'unknown error');
   }
  }
  loadPhotoArchive();
