@@ -40,7 +40,8 @@
 @media(max-width:800px){.hero .hero-inner.hero-layout{grid-template-columns:1fr;gap:34px;max-width:580px}.hero-portrait-wrap{width:min(73vw,335px)}.hero .hero-message h1{font-size:clamp(3.2rem,12vw,5.8rem)}.hero .hero-message .scroll-cue{margin-top:28px}}
 @media(max-width:440px){.hero-portrait-wrap{width:min(70vw,300px)}.hero .hero-message h1{font-size:clamp(2.8rem,13vw,4.2rem)}.hero .hero-message .hero-sub{font-size:1.28rem}.hero .hero-message .hero-copy{font-size:.92rem}}
 
-</style></head>
+</style><script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
 <body class="locked">
 <div id="petals" aria-hidden="true"></div>
 <section class="intro" id="intro" aria-label="Birthday welcome"><div class="intro-inner">
@@ -94,7 +95,33 @@
  $('#nameTitle').innerHTML=Array.from(name).map(function(ch,i){return '<span class="letter" style="--i:'+i+'">'+ch+'</span>'}).join('')+'<span class="dot">.</span>';
  $('#openSurprise').addEventListener('click',function(){intro.classList.add('out');site.classList.add('show');document.body.classList.remove('locked');window.setTimeout(function(){intro.remove()},1000);makePetals(30)});
  function makePetals(n){const layer=$('#petals');for(let i=0;i<n;i++){const p=document.createElement('span');p.className='falling';p.textContent=['✿','✧','❀','·'][Math.floor(Math.random()*4)];p.style.left=(Math.random()*100)+'%';p.style.setProperty('--duration',(7+Math.random()*7)+'s');p.style.setProperty('--drift',((Math.random()-.5)*180)+'px');p.style.animationDelay=(Math.random()*3)+'s';p.style.fontSize=(11+Math.random()*13)+'px';layer.appendChild(p);window.setTimeout(function(){p.remove()},18000)}}
- $$('.photo-frame').forEach(function(frame){const img=$('img',frame);img.src=frame.dataset.photo;img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')});img.addEventListener('error',function(){frame.classList.remove('has-photo')});frame.addEventListener('click',function(){if(frame.classList.contains('has-photo')){$('#lightboxImage').src=img.src;$('#lightbox').classList.add('open');document.body.classList.add('locked')}})});
+ $('.photo-frame').forEach(function(frame){const img=$('img',frame);if(frame.dataset.photo)img.src=frame.dataset.photo;img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')});img.addEventListener('error',function(){frame.classList.remove('has-photo')});frame.addEventListener('click',function(){if(frame.classList.contains('has-photo')){$('#lightboxImage').src=img.src;$('#lightbox').classList.add('open');document.body.classList.add('locked')}})});
+ // The ZIP was uploaded to GitHub as one file, so unpack the images in the browser.
+ async function loadPhotoArchive(){
+  try{
+   const response=await fetch('images/gowthami-birthday-photos.zip');
+   if(!response.ok)throw new Error('Photo archive could not be downloaded ('+response.status+')');
+   if(!window.JSZip)throw new Error('Photo archive loader did not load');
+   const archive=await JSZip.loadAsync(await response.arrayBuffer());
+   const setPhoto=async function(img,name,frame){
+    const zipped=archive.file('images/'+name);
+    if(!zipped)return;
+    const blob=await zipped.async('blob');
+    const url=URL.createObjectURL(blob);
+    img.src=url;
+    if(frame)img.addEventListener('load',function(){if(img.naturalWidth>0)frame.classList.add('has-photo')},{once:true});
+   };
+   const main=$('.hero-main-photo img');if(main)await setPhoto(main,'gowthami-main.jpg');
+   const second=$('.float-secondary img');if(second)await setPhoto(second,'gowthami-standing-garden-pose.jpg');
+   const third=$('.float-third img');if(third)await setPhoto(third,'gowthami-standing-evening.jpg');
+   for(const frame of $('.photo-frame')){
+    const img=$('img',frame);
+    const name=(frame.dataset.photo||img.getAttribute('src')||'').split('/').pop();
+    if(name)await setPhoto(img,name,frame);
+   }
+  }catch(error){console.warn('Birthday photo archive:',error)}
+ }
+ loadPhotoArchive();
  const observeEls=$$('.reveal, .memory-card');if('IntersectionObserver' in window){const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});observeEls.forEach(function(el){io.observe(el)})}else observeEls.forEach(function(el){el.classList.add('in')});
  const letterOverlay=$('#letterOverlay');const openLetter=function(){letterOverlay.classList.add('open');document.body.classList.add('locked');$('#closeLetter').focus()};const closeLetter=function(){letterOverlay.classList.remove('open');document.body.classList.remove('locked');$('#openLetter').focus()};
  $('#openLetter').addEventListener('click',openLetter);$('#closeLetter').addEventListener('click',closeLetter);
