@@ -190,6 +190,20 @@
 .music-help{font-size:.69rem;line-height:1.5;color:#8e777d;margin:0;padding:9px 13px 12px}
 .music-player-head small{color:#8e777d}
 
+
+/* Keep the music control elegant and small on phones */
+.music-dock{width:min(270px,calc(100vw - 20px));right:10px;bottom:10px}
+.music-trigger{gap:8px;padding:7px 10px}
+.music-note{width:28px;height:28px;font-size:1rem}
+.music-trigger-copy{gap:2px}
+.music-trigger-copy strong{font-size:.92rem;line-height:1.2}
+.music-trigger-copy small{font-size:.61rem}
+.music-arrow{font-size:.95rem}
+.music-player-head{padding:9px 11px}
+.music-player-head strong{font-size:.9rem}
+.music-player-head small,.music-help{font-size:.62rem}
+@media(max-width:520px){.music-dock{width:min(238px,calc(100vw - 20px));right:10px;bottom:10px}.music-trigger{padding:7px 9px}}
+
 </style>
 </head>
 <body class="locked">
@@ -264,13 +278,13 @@
 <div class="music-dock" id="musicDock">
  <button class="music-trigger" id="playSong" type="button" aria-expanded="false" aria-controls="musicPlayerWrap">
   <span class="music-note" aria-hidden="true">♫</span>
-  <span class="music-trigger-copy"><strong>Raanjhanaa</strong><small id="musicButtonStatus">Background music · starts at 0:00</small></span>
+  <span class="music-trigger-copy"><strong>Neeve · Darling</strong><small id="musicButtonStatus">Background music · starts at 0:00</small></span>
   <span class="music-arrow" aria-hidden="true">↗</span>
  </button>
  <div class="music-player-wrap" id="musicPlayerWrap" hidden>
-  <div class="music-player-head"><div><strong>Raanjhanaa · from the beginning</strong><small>Local playback · no video or ads</small></div><button id="closeMusic" type="button" aria-label="Close music player">×</button></div>
+  <div class="music-player-head"><div><strong>Neeve · Darling</strong><small>Local playback · no video or ads</small></div><button id="closeMusic" type="button" aria-label="Close music player">×</button></div>
   <audio id="localBackgroundAudio" preload="metadata" playsinline controls></audio>
-  <p class="music-help" id="musicStatus" role="status" aria-live="polite">The song starts from 0:00. Phones may require one tap to allow sound.</p>
+  <p class="music-help" id="musicStatus" role="status" aria-live="polite">Neeve from Darling starts from 0:00. Phones may require one tap to allow sound.</p>
  </div>
  <button class="voice-trigger" id="voiceToggle" type="button" aria-expanded="false" aria-controls="voiceRecorder">🎙 Record my singing</button>
  <div class="voice-recorder" id="voiceRecorder" hidden>
@@ -307,12 +321,12 @@
   });
   backgroundAudio.addEventListener('play',function(){
    if(musicButtonStatus)musicButtonStatus.textContent='Now playing · from the beginning';
-   if(playSong)playSong.setAttribute('aria-label','Pause Raanjhanaa background music');
-   setMusicStatus('Playing from the beginning. Use the controls to pause or adjust volume.');
+   if(playSong)playSong.setAttribute('aria-label','Pause Neeve from Darling');
+   setMusicStatus('Neeve from Darling is playing from the beginning. Use the controls to pause or adjust volume.');
   });
   backgroundAudio.addEventListener('pause',function(){
    if(musicButtonStatus)musicButtonStatus.textContent='Background music · starts at 0:00';
-   if(playSong)playSong.setAttribute('aria-label','Play Raanjhanaa background music');
+   if(playSong)playSong.setAttribute('aria-label','Play Neeve from Darling');
   });
   backgroundAudio.addEventListener('ended',function(){
    try{backgroundAudio.currentTime=0;}catch(error){}
